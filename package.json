@@ -3,13 +3,14 @@
   "version": "0.0.1",
   "description": "Setup and push data from IoT device to cloud provider",
   "main": "index.js",
+  "type":"module",
   "dependencies": {
     "aws-iot-device-sdk": "^2.2.11",
-    "node-fetch": "^3.1.0",
+    "node-fetch": "^3.1.0"
   },
   "devDependencies": {},
   "scripts": {
-    "start": "node index.js",
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
@@ -20,5 +21,5 @@
   "bugs": {
     "url": "https://github.com/balena-io-examples/cloud-relay/issues"
   },
-  "homepage": "https://github.com/balena-projects/balena-aws-device#readme",
+  "homepage": "https://github.com/balena-projects/balena-aws-device#readme"
 }

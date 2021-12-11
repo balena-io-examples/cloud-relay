@@ -1,0 +1,24 @@
+{
+  "name": "cloud-relay",
+  "version": "0.0.1",
+  "description": "Setup and push data from IoT device to cloud provider",
+  "main": "index.js",
+  "dependencies": {
+    "aws-iot-device-sdk": "^2.2.11",
+    "node-fetch": "^3.1.0",
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "node index.js",
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https@github.com:balena-io-examples/cloud-relay.git"
+  },
+  "author": "Ken Bannister <ken@balena.io>",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/balena-io-examples/cloud-relay/issues"
+  },
+  "homepage": "https://github.com/balena-projects/balena-aws-device#readme",
+}

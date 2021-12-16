@@ -1,0 +1,18 @@
+FROM balenalib/%%BALENA_ARCH%%-alpine-node:14-build as build
+
+# Install node dependencies
+COPY package*.json ./
+RUN npm install --production && npm cache clean --force && rm -rf /tmp/*
+
+
+FROM balenalib/%%BALENA_ARCH%%-alpine-node:14-run as run
+
+# Install dependencies
+RUN install_packages openssl
+
+WORKDIR /app
+COPY --from=build ./node_modules ./node_modules
+COPY . .
+
+# Start the container
+CMD ["npm", "start"]

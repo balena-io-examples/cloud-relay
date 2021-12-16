@@ -1,4 +1,11 @@
 import fetch from 'node-fetch'
+import mqtt from 'mqtt'
+import awsIot from 'aws-iot-device-sdk'
+// just for debugging with util.inspect, etc.
+//import util from 'util'
+
+let localMqtt = null
+let awsMqtt = null
 
 /**
  * Verify that *all* expected environment variables from registration exist.
@@ -40,12 +47,38 @@ async function provision(uuid) {
     }
 }
 
+/** Connects and subscribes to local MQTT topic. */
+async function connectLocal() {
+    localMqtt = await mqtt.connect('mqtt://127.0.0.1')
+    console.log("Connected to mqtt://127.0.0.1")
+    await localMqtt.subscribe('sensors', { qos: 1 })
+}
+
+/** Connects to cloud provider MQTT. */
+function connectCloud() {
+    awsMqtt = awsIot.device({
+        privateKey: Buffer.from(process.env.AWS_PRIVATE_KEY, 'base64'),
+        clientCert: Buffer.from(process.env.AWS_CERT, 'base64'),
+            caCert: Buffer.from(process.env.AWS_ROOT_CA, 'base64'),
+          clientId: process.env.RESIN_DEVICE_UUID,
+              host: process.env.AWS_DATA_ENDPOINT,
+        })
+}
+
 async function start() {
+    //console.log("env: " + JSON.stringify(process.env))
     try {
         if (isUnregistered()) {
             await provision(process.env.RESIN_DEVICE_UUID)
         } else if (isRegistrationComplete()) {
-            //await connect()
+            await connectLocal()
+            connectCloud()
+
+            localMqtt.on('message', function (topic, message) {
+                //console.log(message.toString())
+                awsMqtt.publish('sensors', message)
+            })
+
         } else {
             console.log('Partially registered; try again later')
         }

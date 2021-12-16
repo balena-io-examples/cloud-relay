@@ -6,6 +6,7 @@
   "type":"module",
   "dependencies": {
     "aws-iot-device-sdk": "^2.2.11",
+    "mqtt": "^4.2.8",
     "node-fetch": "^3.1.0"
   },
   "devDependencies": {},

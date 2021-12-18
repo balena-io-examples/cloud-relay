@@ -12,7 +12,7 @@ RUN install_packages openssl
 
 WORKDIR /app
 COPY --from=build ./node_modules ./node_modules
-COPY . .
+COPY index.js package.json ./
 
 # Start the container
 CMD ["npm", "start"]

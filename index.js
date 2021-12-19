@@ -1,10 +1,12 @@
 import fetch from 'node-fetch'
-import mqtt from 'mqtt'
+import mqtt from 'async-mqtt'
 import awsIot from 'aws-iot-device-sdk'
 // just for debugging with util.inspect, etc.
 //import util from 'util'
 
+// async wrapper for MQTT client
 let localMqtt = null
+// AWS IoT wrapper for MQTT client (not async)
 let awsMqtt = null
 
 /**
@@ -49,7 +51,7 @@ async function provision(uuid) {
 
 /** Connects and subscribes to local MQTT topic. */
 async function connectLocal() {
-    localMqtt = await mqtt.connect('mqtt://127.0.0.1')
+    localMqtt = await mqtt.connectAsync('mqtt://127.0.0.1')
     console.log("Connected to mqtt://127.0.0.1")
     await localMqtt.subscribe('sensors', { qos: 1 })
 }
@@ -65,6 +67,7 @@ function connectCloud() {
         })
 }
 
+/** Runs the relay. Wraps all execution in a try/catch block. */
 async function start() {
     //console.log("env: " + JSON.stringify(process.env))
     try {

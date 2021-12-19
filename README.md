@@ -4,7 +4,7 @@
 
 ![Overview](overview.png)
 
-The cloud relay accepts application data via MQTT and relays it to a cloud provider's IoT Core facility. You only need to provide the data, and the cloud relay takes care of messaging with the cloud provider for you. Works with the [balena-aws-lambda](https://github.com/balena-io-examples/balena-aws-lambda) utility to automate device provisioning to AWS.
+The cloud relay accepts application data via MQTT and relays it to a cloud provider's IoT Core facility. You only need to provide the data, and the cloud relay takes care of messaging with the cloud provider. Cloud relay also uses the [balena-aws-lambda](https://github.com/balena-io-examples/balena-aws-lambda) utility to securely automate device provisioning to AWS IoT Core.
 
 ## Getting Started
 
@@ -21,7 +21,7 @@ Finally push the docker-compose script to the balena builders, substituting your
     balena push <myFleet>
 ```
 
-After the automated provisioning, you should see data flowing through the cloud relay to AWS, like the balenaCloud log display below.
+After the automated cloud provisioning, you should see data flowing through the cloud relay to AWS, like the log output below.
 
 ```
 sensor  publishing sample: {} {'short_uuid': 'ab24d4b', 'quality_value': '70', 'quality_max': '70', 'signal_level': '-39'}
@@ -30,11 +30,17 @@ sensor  publishing sample: {} {'short_uuid': 'ab24d4b', 'quality_value': '70', '
 
 ## Configuration
 
-Define these required balena fleet variables, which are shared by all devices.
+**Required** balena fleet variables
 
 |  Name            | Value                                                                         | Notes                                                                            |
 |------------------|-------------------------------------------------------------------------------|----------------------------------------------------------------------------------|
-| AWS_DATA_ENDPOINT| xxxxxxxxxxxxxx-ats.iot.us-east-1.amazonaws.com                                | Host name to receive data. See *Settings* in the AWS IoT console.                |
-|  PROVISION_URL   | https://xxxxxxxxxx.execute-api.us-east-1.amazonaws.com/resinLambda-development| URL to contact the AWS Lambda provisioning function created by balena-aws-lambda.|
+| AWS_DATA_ENDPOINT| like `xxxxxxxx-ats.iot.us-east-1.amazonaws.com                               ` | Host name to receive data. See *Settings* in the AWS IoT console.                |
+|  PROVISION_URL   | like `https://xxxxxxxx.execute-api.us-east-1.amazonaws.com/resinLambda-development` | URL to contact the AWS Lambda provisioning function created by balena-aws-lambda.|
 
+**Optional** balena fleet or device variables, if not using default value
+
+|  Name            | Value                                                                         | Notes                                                                            |
+|------------------|-------------------------------------------------------------------------------|----------------------------------------------------------------------------------|
+| PRODUCER_TOPIC| default `sensors` | Message topic from data producer |
+| CLOUD_DATA_TOPIC| default `sensors` | Message topic for data to cloud |
 

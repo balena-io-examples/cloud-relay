@@ -51,13 +51,21 @@ async function provision(uuid) {
 
 /** Connects and subscribes to local MQTT topic. */
 async function connectLocal() {
+    if (!process.env.PRODUCER_TOPIC) {
+        process.env.PRODUCER_TOPIC = 'sensors'
+    }
+
     localMqtt = await mqtt.connectAsync('mqtt://127.0.0.1')
     console.log("Connected to mqtt://127.0.0.1")
-    await localMqtt.subscribe('sensors', { qos: 1 })
+    await localMqtt.subscribe(process.env.PRODUCER_TOPIC, { qos: 1 })
 }
 
 /** Connects to cloud provider MQTT. */
 function connectCloud() {
+    if (!process.env.CLOUD_DATA_TOPIC) {
+        process.env.CLOUD_DATA_TOPIC = 'sensors'
+    }
+
     awsMqtt = awsIot.device({
         privateKey: Buffer.from(process.env.AWS_PRIVATE_KEY, 'base64'),
         clientCert: Buffer.from(process.env.AWS_CERT, 'base64'),
@@ -79,7 +87,7 @@ async function start() {
 
             localMqtt.on('message', function (topic, message) {
                 //console.log(message.toString())
-                awsMqtt.publish('sensors', message)
+                awsMqtt.publish(process.env.CLOUD_DATA_TOPIC, message)
             })
 
         } else {

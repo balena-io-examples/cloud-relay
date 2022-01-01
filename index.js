@@ -11,24 +11,6 @@ let localMqtt = null
 let cloudMsgr = null
 
 /**
- * Verify that *all* expected environment variables from registration exist.
- */
-function isRegistrationComplete() {
-    return process.env.AWS_PRIVATE_KEY
-            && process.env.AWS_CERT
-            && process.env.AWS_ROOT_CA
-}
-
-/**
- * Verify that *none* of the expected environment variables from registration exist.
- */
-function isUnregistered() {
-    return !process.env.AWS_PRIVATE_KEY
-            && !process.env.AWS_CERT
-            && !process.env.AWS_ROOT_CA
-}
-
-/**
  * Provision provided device to cloud. Throws on HTTP error response code.
  */
 async function provision(uuid) {
@@ -61,25 +43,29 @@ async function connectLocal() {
     await localMqtt.subscribe(process.env.PRODUCER_TOPIC, { qos: 1 })
 }
 
-/** Connects to cloud provider'S (MQTT) messaging. */
-function connectCloud() {
-    if (!process.env.CLOUD_DATA_TOPIC) {
-        process.env.CLOUD_DATA_TOPIC = 'sensors'
-    }
-
-    cloudMsgr = Messenger.create()
-    cloudMsgr.connect()
-}
-
 /** Runs the relay. Wraps all execution in a try/catch block. */
 async function start() {
     //console.log("env: " + JSON.stringify(process.env))
+    if (!process.env.CLOUD_PROVIDER) {
+        process.env.CLOUD_PROVIDER = 'AWS'
+    }
+    let cloudMsgr = Messenger.create(process.env.CLOUD_PROVIDER)
+    console.log(`Created cloud messenger: ${cloudMsgr}`)
+    
     try {
-        if (isUnregistered()) {
+        if (cloudMsgr.isUnregistered()) {
             await provision(process.env.RESIN_DEVICE_UUID)
-        } else if (isRegistrationComplete()) {
+
+        } else if (cloudMsgr.isRegistrationComplete()) {
             await connectLocal()
-            connectCloud()
+            if (!process.env.CLOUD_DATA_TOPIC) {
+                process.env.CLOUD_DATA_TOPIC = cloudMsgr.defaultDataTopic
+            }
+            if (cloudMsgr.isSyncConnect()) {
+                cloudMsgr.connectSync()
+            } else {
+                await cloudMsgr.connect()
+            }
 
             localMqtt.on('message', function (topic, message) {
                 cloudMsgr.publish(process.env.CLOUD_DATA_TOPIC, message)

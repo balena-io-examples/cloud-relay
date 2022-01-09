@@ -5,6 +5,8 @@ services:
     image: kb2ma/cloud-relay
     #restart: always
     network_mode: host
+    labels:
+      io.balena.features.supervisor-api: '1'
     depends_on:
         - "mqtt"
   # collects WiFi metrics

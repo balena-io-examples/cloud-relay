@@ -74,28 +74,29 @@ async function connectLocal() {
     }
 
     let count = 0
+    const maxTries = 3
     const delay = 5
-    let isConnected = false
     do { 
         try {
+            count++
             if (!localMqtt) {
                 localMqtt = await mqtt.connectAsync('mqtt://127.0.0.1')
                 console.log("Connected to mqtt://127.0.0.1")
             }
             await localMqtt.subscribe(process.env.PRODUCER_TOPIC, { qos: 1 })
             console.log("Subscribed to topic:", process.env.PRODUCER_TOPIC)
-            isConnected = true
+            break
         } catch(e) {
             console.warn("Cannot connect to local MQTT:", e)
-            count++
-            if (count == 3) {
-                localMqtt = null
-                break
+            if (count < maxTries) {
+                console.log(`Retry in ${delay} seconds`)
+                await new Promise(r => setTimeout(r, delay * 1000))
+            } else {
+                console.warn(`Retries exhausted`)
+                localMqtt = null  // indicates connection failed
             }
-            console.log(`Retry in ${delay} seconds`)
-            await new Promise(r => setTimeout(r, delay * 1000))
         }
-    } while(!isConnected)
+    } while(count < maxTries)
 }
 
 /** Runs the relay. Wraps all execution in a try/catch block. */

@@ -3,7 +3,7 @@ version: '2'
 services:
   cloud-relay:
     image: kb2ma/cloud-relay
-    #restart: always
+    restart: on-failure
     network_mode: host
     labels:
       io.balena.features.supervisor-api: '1'

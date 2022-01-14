@@ -4,43 +4,70 @@
 
 ![Overview](overview.png)
 
-The cloud relay accepts application data via MQTT and relays it to a cloud provider's IoT Core facility. You only need to provide the data, and the cloud relay takes care of messaging with the cloud provider. Cloud relay also uses the [balena-aws-lambda](https://github.com/balena-io-examples/balena-aws-lambda) utility to securely automate device provisioning to AWS IoT Core.
+Cloud Relay accepts application data via MQTT and relays it to a cloud provider's IoT Core facility. You only need to provide the data, and Cloud Relay takes care of messaging with the cloud provider. Cloud Relay works with AWS IoT Core and Google Cloud (GCP) IoT Core.
 
 ## Getting Started
 
-Use the docker-compose [example script](docker-compose.yml), which provides WiFi metrics data for the cloud relay. We assume you have a running balena-aws-lambda function to handle device provisioning with AWS.
+Use the docker-compose [example script](docker-compose.yml), which provides WiFi metrics data for Cloud Relay. We assume you also have some capability to provision devices securely to the provider's device registry. See the *Provisioning* section below.
 
-First create a multi-container fleet in balenaCloud and provision a device with balenaOS. See the [online docs](https://www.balena.io/docs/learn/getting-started/raspberrypi3/nodejs/) for details.
-
-Next define the fleet variables from the AWS cloud setup, AWS_DATA_ENDPOINT and PROVISION_URL, as described in the *Configuration* section below.
-
-Finally push the docker-compose script to the balena builders, substituting your fleet's name for `<myFleet>` in the commands below.
+First create a multi-container fleet in balenaCloud and provision a device with balenaOS. See the [online docs](https://www.balena.io/docs/learn/getting-started/raspberrypi3/nodejs/) for details. Next define the fleet variables from the cloud provider's setup, as described in the *Configuration* section below. Finally push the docker-compose script to the balena builders, substituting your fleet's name for `<myFleet>` in the commands below.
 
 ```
     git clone https://github.com/balena-io-examples/cloud-relay.git
     balena push <myFleet>
 ```
 
-After the automated cloud provisioning, you should see data flowing through the cloud relay to AWS, like the log output below.
+After any automated cloud provisioning, you should see data flowing through the cloud relay to the provider's MQTT broker, like the log output below.
 
 ```
 sensor  publishing sample: {} {'short_uuid': 'ab24d4b', 'quality_value': '70', 'quality_max': '70', 'signal_level': '-39'}
 sensor  publishing sample: {} {'short_uuid': 'ab24d4b', 'quality_value': '70', 'quality_max': '70', 'signal_level': '-39'}
 ```
+
+**GCP Note** Cloud Relay publishes only to the telemetry (events) topic. It does not publish to the state topic or subscribe to the configuration or commands topics.
+
+### Provisioning
+
+Cloud relay depends on secure provisioning of a balena device to the provider's registry before publishing data. We have developed projects that automate this provisioning, including use of the provider's "cloud function" capability to trigger the provisioning code via HTTP. See the linked projects in the table below and the `PROVISION_URL` environment variable in the *Configuration* section below.
+
+| Provider / Cloud Function | GitHub project |
+|----------|-------------------|
+| AWS Lambda | [balena-aws-lambda](https://github.com/balena-io-examples/balena-aws-lambda) |
+| GCP Cloud Functions | [gcp-iot-cloud](https://github.com/balena-io-examples/gcp-iot-cloud) |
 
 ## Configuration
 
-**Required** balena fleet variables
+Environment variables, probably common to all devices so may be defined as balena Fleet variables.
 
-|  Name            | Value                                                                         | Notes                                                                            |
-|------------------|-------------------------------------------------------------------------------|----------------------------------------------------------------------------------|
-| AWS_DATA_ENDPOINT| like `xxxxxxxx-ats.iot.us-east-1.amazonaws.com                               ` | Host name to receive data. See *Settings* in the AWS IoT console.                |
-|  PROVISION_URL   | like `https://xxxxxxxx.execute-api.us-east-1.amazonaws.com/resinLambda-development` | URL to contact the AWS Lambda provisioning function created by balena-aws-lambda.|
-
-**Optional** balena fleet or device variables, if not using default value
-
-|  Name            | Value                                                                         | Notes                                                                            |
-|------------------|-------------------------------------------------------------------------------|----------------------------------------------------------------------------------|
+|  Name | Value | Notes |
+|-------|-------|-------|
+|  PROVISION_URL   | AWS Lambda like<br>`https://xxxxxxxx.execute-api.us-east-1.amazonaws.com/resinLambda-development`<br><br>GCP Cloud Functions like<br>`https://<region>-<projectID>.cloudfunctions.net/provision` | URL to contact the provisioning cloud function. See the README for the respective cloud provisioning projects above for specifics.|
 | PRODUCER_TOPIC| default `sensors` | Message topic from data producer |
-| CLOUD_DATA_TOPIC| default `sensors` | Message topic for data to cloud |
+| CLOUD_DATA_TOPIC| AWS default `sensors`<br><br>GCP default `/devices/<deviceId>/events` | Message topic for data to cloud. For GCP, `<deviceId>` is based on balena device UUID and managed internally |
 
+**AWS** specific variables
+
+|  Name | Value | Notes |
+|-------|-------|-------|
+| AWS_DATA_ENDPOINT| like `xxxxxxxx-ats.iot.us-east-1.amazonaws.com                               ` | Host name to receive data. See *Settings* in the AWS IoT console. |
+
+**GCP** specific variables
+
+|  Name | Value | Notes |
+|-------|-------|-------|
+| GCP_PROJECT_ID | | as you defined it in IoT Core |
+| GCP_REGION | example `us-central1` | as you chose in IoT Core |
+| GCP_REGISTRY_ID | | as you defined it in IoT Core |
+| GCP_ROOT_CAS | | Concatenation of root CA certificates, as described below |
+| GCP_TOKEN_LIFETIME | default `1440`<br><br>= 24 hours | Messaging JWT token lifetime in minutes, used to set expiration. Defaults to maximum allowed. Token is renewed 15 minutes before expiration. |
+
+Cloud Relay publishes to the GCP [long term domain](https://cloud.google.com/iot/docs/how-tos/mqtt-bridge#using_a_long-term_mqtt_domain), `mqtt.2030.ltsapis.goog`. This domain uses two root CA certificates, which are linked from that page. Use the script below to create the content for the `GCP_ROOT_CAS` variable from the certificates.
+
+```
+# Convert root cert format from DER to PEM
+openssl x509 -inform der -in gtsltsr.crt -out gtsltsr.pem
+openssl x509 -inform der -in GSR4.crt -out GSR4.pem
+
+# Concatenate and base64 encode for environment variable
+cat gtsltsr.pem GSR4.pem |base64 -w 0
+```

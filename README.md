@@ -37,7 +37,7 @@ Cloud relay depends on secure provisioning of a balena device to the provider's 
 
 ## Configuration
 
-Environment variables, probably common to all devices so may be defined as balena Fleet variables.
+Environment variables, probably common to all devices so may be defined as balena **Fleet** variables.
 
 |  Name | Value | Notes |
 |-------|-------|-------|
@@ -55,8 +55,8 @@ Environment variables, probably common to all devices so may be defined as balen
 
 |  Name | Value | Notes |
 |-------|-------|-------|
-| GCP_PROJECT_ID | | as you defined it in IoT Core |
-| GCP_REGION | example `us-central1` | as you chose in IoT Core |
+| GCP_PROJECT_ID | like `my-project-000000` | as you defined it in IoT Core |
+| GCP_REGION | like `us-central1` | as you chose in IoT Core |
 | GCP_REGISTRY_ID | | as you defined it in IoT Core |
 | GCP_ROOT_CAS | | Concatenation of root CA certificates, as described below |
 | GCP_TOKEN_LIFETIME | default `1440`<br><br>= 24 hours | Messaging JWT token lifetime in minutes, used to set expiration. Defaults to maximum allowed. Token is renewed 15 minutes before expiration. |

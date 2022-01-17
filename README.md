@@ -35,6 +35,8 @@ Cloud relay depends on secure provisioning of a balena device to the provider's 
 | AWS Lambda | [balena-aws-lambda](https://github.com/balena-io-examples/balena-aws-lambda) |
 | GCP Cloud Functions | [gcp-iot-cloud](https://github.com/balena-io-examples/gcp-iot-cloud) |
 
+The provisioning tool also generates environment variables required by the device to communicate with the provider, also listed in the *Configuration* section.
+
 ## Configuration
 
 Environment variables, probably common to all devices so may be defined as balena **Fleet** variables.
@@ -43,7 +45,7 @@ Environment variables, probably common to all devices so may be defined as balen
 |-------|-------|-------|
 |  PROVISION_URL   | AWS Lambda like<br>`https://xxxxxxxx.execute-api.us-east-1.amazonaws.com/resinLambda-development`<br><br>GCP Cloud Functions like<br>`https://<region>-<projectID>.cloudfunctions.net/provision` | URL to contact the provisioning cloud function. See the README for the respective cloud provisioning projects above for specifics.|
 | PRODUCER_TOPIC| default `sensors` | Message topic from data producer |
-| CLOUD_DATA_TOPIC| AWS default `sensors`<br><br>GCP default `/devices/<deviceId>/events` | Message topic for data to cloud. For GCP, `<deviceId>` is based on balena device UUID and managed internally |
+| CLOUD_DATA_TOPIC| AWS default `sensors`<br><br>GCP default `events` | Message topic for data to cloud. For GCP, `events` is the default *telemetry* topic. As the docs [describe](https://cloud.google.com/iot/docs/how-tos/mqtt-bridge#publishing_telemetry_events_to_additional_cloud_pubsub_topics), you also may publish to a subfolder like `events/alerts`. |
 
 **AWS** specific variables
 
@@ -51,15 +53,18 @@ Environment variables, probably common to all devices so may be defined as balen
 |-------|-------|-------|
 | AWS_DATA_ENDPOINT| like `xxxxxxxx-ats.iot.us-east-1.amazonaws.com                               ` | Host name to receive data. See *Settings* in the AWS IoT console. |
 
+The provisioning tool generates AWS_CERT, AWS_PRIVATE_KEY, and AWS_ROOT_CA.
+
 **GCP** specific variables
 
 |  Name | Value | Notes |
 |-------|-------|-------|
 | GCP_PROJECT_ID | like `my-project-000000` | as you defined it in IoT Core |
-| GCP_REGION | like `us-central1` | as you chose in IoT Core |
-| GCP_REGISTRY_ID | | as you defined it in IoT Core |
 | GCP_ROOT_CAS | | Concatenation of root CA certificates, as described below |
 | GCP_TOKEN_LIFETIME | default `1440`<br><br>= 24 hours | Messaging JWT token lifetime in minutes, used to set expiration. Defaults to maximum allowed. Token is renewed 15 minutes before expiration. |
+
+The provisioning tool generates GCP_CLIENT_PATH, GCP_DATA_TOPIC_ROOT, and GCP_PRIVATE_KEY.
+
 
 Cloud Relay publishes to the GCP [long term domain](https://cloud.google.com/iot/docs/how-tos/mqtt-bridge#using_a_long-term_mqtt_domain), `mqtt.2030.ltsapis.goog`. This domain uses two root CA certificates, which are linked from that page. Use the script below to create the content for the `GCP_ROOT_CAS` variable from the certificates.
 

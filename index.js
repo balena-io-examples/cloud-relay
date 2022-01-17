@@ -118,6 +118,7 @@ async function start() {
                 if (!process.env.CLOUD_DATA_TOPIC) {
                     process.env.CLOUD_DATA_TOPIC = cloudMsgr.defaultDataTopic
                 }
+                const cloudDataTopic = cloudMsgr.createDataTopic()
                 if (cloudMsgr.isSyncConnect()) {
                     cloudMsgr.connectSync()
                 } else {
@@ -125,7 +126,7 @@ async function start() {
                 }
 
                 localMqtt.on('message', function (topic, message) {
-                    cloudMsgr.publish(process.env.CLOUD_DATA_TOPIC, message)
+                    cloudMsgr.publish(cloudDataTopic, message)
                 })
             }
 

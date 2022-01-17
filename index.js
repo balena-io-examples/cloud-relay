@@ -115,10 +115,10 @@ async function start() {
         } else if (cloudMsgr.isRegistrationComplete()) {
             await connectLocal()
             if (localMqtt) {
-                if (!process.env.CLOUD_DATA_TOPIC) {
-                    process.env.CLOUD_DATA_TOPIC = cloudMsgr.defaultDataTopic
+                if (!process.env.CLOUD_CONSUMER_TOPIC) {
+                    process.env.CLOUD_CONSUMER_TOPIC = cloudMsgr.defaultConsumerTopic
                 }
-                const cloudDataTopic = cloudMsgr.createDataTopic()
+                const cloudConsumerTopic = cloudMsgr.createConsumerTopic()
                 if (cloudMsgr.isSyncConnect()) {
                     cloudMsgr.connectSync()
                 } else {
@@ -126,7 +126,7 @@ async function start() {
                 }
 
                 localMqtt.on('message', function (topic, message) {
-                    cloudMsgr.publish(cloudDataTopic, message)
+                    cloudMsgr.publish(cloudConsumerTopic, message)
                 })
             }
 

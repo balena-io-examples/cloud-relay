@@ -43,9 +43,10 @@ Environment variables, probably common to all devices so may be defined as balen
 
 |  Name | Value | Notes |
 |-------|-------|-------|
+| CLOUD_PROVIDER | default `AWS`<br><br>or `GCP` | |
 |  PROVISION_URL   | AWS Lambda like<br>`https://xxxxxxxx.execute-api.us-east-1.amazonaws.com/resinLambda-development`<br><br>GCP Cloud Functions like<br>`https://<region>-<projectID>.cloudfunctions.net/provision` | URL to contact the provisioning cloud function. See the README for the respective cloud provisioning projects above for specifics.|
 | PRODUCER_TOPIC| default `sensors` | Message topic from data producer |
-| CLOUD_DATA_TOPIC| AWS default `sensors`<br><br>GCP default `events` | Message topic for data to cloud. For GCP, `events` is the default *telemetry* topic. As the docs [describe](https://cloud.google.com/iot/docs/how-tos/mqtt-bridge#publishing_telemetry_events_to_additional_cloud_pubsub_topics), you also may publish to a subfolder like `events/alerts`. |
+| CLOUD_CONSUMER_TOPIC| AWS default `sensors`<br><br>GCP default `events` | Message topic expected by cloud consumer. For GCP, `events` is the default *telemetry* topic. As the docs [describe](https://cloud.google.com/iot/docs/how-tos/mqtt-bridge#publishing_telemetry_events_to_additional_cloud_pubsub_topics), you also may publish to a subfolder like `events/alerts`. |
 
 **AWS** specific variables
 
@@ -57,9 +58,4 @@ The provisioning tool generates AWS_CERT, AWS_PRIVATE_KEY, and AWS_ROOT_CA.
 
 **GCP** specific variables
 
-|  Name | Value | Notes |
-|-------|-------|-------|
-| GCP_PROJECT_ID | like `my-project-000000` | as you defined it in IoT Core |
-| GCP_TOKEN_LIFETIME | default `1440`<br><br>= 24 hours | Messaging JWT token lifetime in minutes, used to set expiration. Defaults to maximum allowed. Token is renewed 15 minutes before expiration. |
-
-The provisioning tool generates GCP_CLIENT_PATH, GCP_DATA_TOPIC_ROOT, and GCP_PRIVATE_KEY.
+No GCP specific variables for configuration. However, the provisioning tool generates GCP_CLIENT_PATH, GCP_DATA_TOPIC_ROOT, GCP_PRIVATE_KEY, and GCP_PROJECT_ID.

@@ -60,19 +60,6 @@ The provisioning tool generates AWS_CERT, AWS_PRIVATE_KEY, and AWS_ROOT_CA.
 |  Name | Value | Notes |
 |-------|-------|-------|
 | GCP_PROJECT_ID | like `my-project-000000` | as you defined it in IoT Core |
-| GCP_ROOT_CAS | | Concatenation of root CA certificates, as described below |
 | GCP_TOKEN_LIFETIME | default `1440`<br><br>= 24 hours | Messaging JWT token lifetime in minutes, used to set expiration. Defaults to maximum allowed. Token is renewed 15 minutes before expiration. |
 
 The provisioning tool generates GCP_CLIENT_PATH, GCP_DATA_TOPIC_ROOT, and GCP_PRIVATE_KEY.
-
-
-Cloud Relay publishes to the GCP [long term domain](https://cloud.google.com/iot/docs/how-tos/mqtt-bridge#using_a_long-term_mqtt_domain), `mqtt.2030.ltsapis.goog`. This domain uses two root CA certificates, which are linked from that page. Use the script below to create the content for the `GCP_ROOT_CAS` variable from the certificates.
-
-```
-# Convert root cert format from DER to PEM
-openssl x509 -inform der -in gtsltsr.crt -out gtsltsr.pem
-openssl x509 -inform der -in GSR4.crt -out GSR4.pem
-
-# Concatenate and base64 encode for environment variable
-cat gtsltsr.pem GSR4.pem |base64 -w 0
-```

@@ -118,7 +118,7 @@ async function start() {
                 if (!process.env.CLOUD_CONSUMER_TOPIC) {
                     process.env.CLOUD_CONSUMER_TOPIC = cloudMsgr.defaultConsumerTopic
                 }
-                const cloudConsumerTopic = cloudMsgr.createConsumerTopic()
+                const finalTopic = cloudMsgr.finalizeConsumerTopic(process.env.CLOUD_CONSUMER_TOPIC)
                 if (cloudMsgr.isSyncConnect()) {
                     cloudMsgr.connectSync()
                 } else {
@@ -126,7 +126,7 @@ async function start() {
                 }
 
                 localMqtt.on('message', function (topic, message) {
-                    cloudMsgr.publish(cloudConsumerTopic, message)
+                    cloudMsgr.publish(finalTopic, message)
                 })
             }
 

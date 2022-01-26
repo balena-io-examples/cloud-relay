@@ -11,6 +11,19 @@ let localMqtt = null
 let cloudMsgr = null
 
 /**
+ * Forces the supervisor to update environment variables.
+ */
+async function updateEnvironmentVars() {
+    const updateUrl = `${process.env.BALENA_SUPERVISOR_ADDRESS}/v1/update?apikey=${process.env.BALENA_SUPERVISOR_API_KEY}`
+    const updateResp = await fetch(updateUrl, {
+        method: 'POST',
+        body: '{ "force": true }',
+        headers: { 'Content-Type': 'application/json' }
+    })
+    console.log("Supervisor updated:", updateResp.status)
+}
+
+/**
  * Provision provided device to cloud.
  * 
  * @return {boolean} true if provisioning successful; otherwise false.
@@ -22,9 +35,21 @@ async function provision(uuid) {
     }
     console.log("Provisioning with cloud provider")
 
+    let bodyJson = null
+    switch (process.env.CLOUD_PROVIDER) {
+        case 'AWS':
+            bodyJson = `{ "uuid": "${uuid}", "method": "POST" }`
+            break
+        case 'GCP':
+            bodyJson = `{ "uuid": "${uuid}" }`
+            break
+        default:
+            throw Error(`cloudProvider ${process.env.CLOUD_PROVIDER} unrecognized`)
+    }
+
     const response = await fetch(url, {
         method: 'POST',
-        body: `{ "uuid": "${uuid}", "attributes": {} }`,
+        body: bodyJson,
         headers: {'Cache-Control': 'no-cache', 'Content-Type': 'application/json'}
     })
     const text = await response.text()
@@ -34,12 +59,16 @@ async function provision(uuid) {
     } else {
         console.warn(`Provisioning failure: ${response.status} ${text}`)
 
-        // GCP error handling:
         // If device already provisioned, Supervisor may not have updated environment
         // vars yet and thus tried to provision again. So force Supervisor to update
         // and refresh environment variables. If successful, this service will
         // not attempt to provision on the next invocation.
-        if (process.env.CLOUD_PROVIDER == 'GCP') {
+        if (process.env.CLOUD_PROVIDER == 'AWS') {
+            if (text == "thing already exists") {
+                console.warn("AWS thing already exists; updating environment vars")
+                updateEnvironmentVars()
+            }
+        } else if (process.env.CLOUD_PROVIDER == 'GCP') {
             let respJson = {}
             try {
                 respJson = JSON.parse(text)
@@ -49,14 +78,8 @@ async function provision(uuid) {
             const alreadyExistsCode = 6
 
             if (respJson.code && respJson.code == alreadyExistsCode) {
-                console.warn("GCP device already exists; updating Supervisor to refresh environment vars")
-                const updateUrl = `${process.env.BALENA_SUPERVISOR_ADDRESS}/v1/update?apikey=${process.env.BALENA_SUPERVISOR_API_KEY}`
-                const updateResp = await fetch(updateUrl, {
-                    method: 'POST',
-                    body: '{ "force": true }',
-                    headers: { 'Content-Type': 'application/json' }
-                })
-                console.log("Supervisor updated:", updateResp.status)
+                console.warn("GCP device already exists; updating environment vars")
+                updateEnvironmentVars()
             }
         }
     }

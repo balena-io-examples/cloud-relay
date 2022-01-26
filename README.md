@@ -32,8 +32,8 @@ Cloud relay depends on secure provisioning of a balena device to the provider's 
 
 | Provider / Cloud Function | GitHub project |
 |----------|-------------------|
-| AWS Lambda | [balena-aws-lambda](https://github.com/balena-io-examples/balena-aws-lambda) |
-| GCP Cloud Functions | [gcp-iot-cloud](https://github.com/balena-io-examples/gcp-iot-cloud) |
+| AWS Lambda | [aws-iot-provision](https://github.com/balena-io-examples/aws-iot-provision) |
+| GCP Cloud Functions | [gcp-iot-provision](https://github.com/balena-io-examples/gcp-iot-provision) |
 
 The provisioning tool also generates environment variables required by the device to communicate with the provider, also listed in the *Configuration* section.
 
@@ -44,7 +44,7 @@ Environment variables, probably common to all devices so may be defined as balen
 |  Name | Value | Notes |
 |-------|-------|-------|
 | CLOUD_PROVIDER | default `AWS`<br><br>or `GCP` | |
-|  PROVISION_URL   | AWS Lambda like<br>`https://xxxxxxxx.execute-api.us-east-1.amazonaws.com/resinLambda-development`<br><br>GCP Cloud Functions like<br>`https://<region>-<projectID>.cloudfunctions.net/provision` | URL to contact the provisioning cloud function. See the README for the respective cloud provisioning projects above for specifics.|
+|  PROVISION_URL   | AWS Lambda like<br>`https://xxxxxxxx.execute-api.<region>.amazonaws.com/default/provision`<br><br>GCP Cloud Functions like<br>`https://<region>-<projectID>.cloudfunctions.net/provision` | URL to contact the provisioning cloud function. See the README for the respective cloud provisioning projects above for specifics.|
 | PRODUCER_TOPIC| default `sensors` | Message topic from data producer |
 | CLOUD_CONSUMER_TOPIC| AWS default `sensors`<br><br>GCP default `events` | Message topic expected by cloud consumer. For GCP, `events` is the default *telemetry* topic. As the docs [describe](https://cloud.google.com/iot/docs/how-tos/mqtt-bridge#publishing_telemetry_events_to_additional_cloud_pubsub_topics), you also may publish to a subfolder like `events/alerts`. |
 
@@ -52,9 +52,9 @@ Environment variables, probably common to all devices so may be defined as balen
 
 |  Name | Value | Notes |
 |-------|-------|-------|
-| AWS_DATA_ENDPOINT| like `xxxxxxxx-ats.iot.us-east-1.amazonaws.com                               ` | Host name to receive data. See *Settings* in the AWS IoT console. |
+| AWS_DATA_ENDPOINT| like `xxxxxxxx-ats.iot.<region>.amazonaws.com                               ` | Host name to receive data. See *Settings* in the AWS IoT console. |
 
-The provisioning tool generates AWS_CERT, AWS_PRIVATE_KEY, and AWS_ROOT_CA.
+The provisioning tool generates AWS_CERT, and AWS_PRIVATE_KEY.
 
 **GCP** specific variables
 

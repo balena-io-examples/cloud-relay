@@ -8,12 +8,10 @@ Cloud Relay accepts application data via MQTT and relays it to a cloud provider'
 
 ## Getting Started
 
-You must install the Cloud Relay container on your device as well as set up the cloud provider's IoT service. Balena also provides cloud functions for AWS and Google Cloud that expose an HTTP endpoint to initially provision each device. 
+You must install the Cloud Relay container on your device as well as set up the cloud provider's IoT service. Balena also provides cloud functions for AWS and Google Cloud that expose an HTTP endpoint to initially provision each device. See the _Cloud Provisioning_ section below.
 
 ### Device
-We will use the docker-compose [example script](docker-compose.yml), which provides WiFi metrics data. Cloud Relay also requires that your balena device has been provisioned in the cloud provider's IoT device registry. See the *Provisioning* section below.
-
-First create a multi-container fleet in balenaCloud and provision a device with balenaOS. See the [online docs](https://www.balena.io/docs/learn/getting-started/raspberrypi3/nodejs/) for details. Next define the fleet variables from the cloud provider's setup, as described in the *Configuration* section below. Finally push the docker-compose script to the balena builders, substituting your fleet's name for `<myFleet>` in the commands below.
+We will use the docker-compose [example script](docker-compose.yml), which provides WiFi metrics data. First create a multi-container fleet in balenaCloud and provision a device with balenaOS. See the [online docs](https://www.balena.io/docs/learn/getting-started/raspberrypi3/nodejs/) for details. Next define the fleet variables from the cloud provider's setup, as described in the *Configuration* section below. Finally push the docker-compose script to the balena builders, substituting your fleet's name for `<myFleet>` in the commands below.
 
 ```
     git clone https://github.com/balena-io-examples/cloud-relay.git
@@ -23,8 +21,8 @@ First create a multi-container fleet in balenaCloud and provision a device with 
 After any automated cloud provisioning, you should see data flowing through the cloud relay to the provider's MQTT broker, like the log output below.
 
 ```
-sensor  publishing sample: {} {'short_uuid': 'ab24d4b', 'quality_value': '70', 'quality_max': '70', 'signal_level': '-39'}
-sensor  publishing sample: {} {'short_uuid': 'ab24d4b', 'quality_value': '70', 'quality_max': '70', 'signal_level': '-39'}
+sensor  publishing sample: {} {'short_uuid': 'ab24d4b', 'quality_value': '70', 'quality_max': 70, 'signal_level': -39.0}
+sensor  publishing sample: {} {'short_uuid': 'ab24d4b', 'quality_value': '70', 'quality_max': 70, 'signal_level': -39.0}
 ```
 
 **GCP Note** Cloud Relay publishes only to the telemetry (events) topic. It does not publish to the state topic or subscribe to the configuration or commands topics.

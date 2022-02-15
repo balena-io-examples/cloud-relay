@@ -38,6 +38,7 @@ async function provision(uuid) {
     let bodyJson = null
     switch (process.env.CLOUD_PROVIDER) {
         case 'AWS':
+        case 'AZURE':
             bodyJson = `{ "uuid": "${uuid}", "method": "POST" }`
             break
         case 'GCP':
@@ -63,24 +64,32 @@ async function provision(uuid) {
         // vars yet and thus tried to provision again. So force Supervisor to update
         // and refresh environment variables. If successful, this service will
         // not attempt to provision on the next invocation.
-        if (process.env.CLOUD_PROVIDER == 'AWS') {
-            if (text == "thing already exists") {
-                console.warn("AWS thing already exists; updating environment vars")
-                updateEnvironmentVars()
-            }
-        } else if (process.env.CLOUD_PROVIDER == 'GCP') {
-            let respJson = {}
-            try {
-                respJson = JSON.parse(text)
-            } catch(e) {
-                // just use empty respJson
-            }
-            const alreadyExistsCode = 6
+        let alreadyExists = false
+        switch (process.env.CLOUD_PROVIDER) {
+            case 'AWS':
+                alreadyExists = (text == "thing already exists")
+                break
+            case 'AZURE':
+                alreadyExists = text.startsWith("DeviceAlreadyExistsError")
+                break
+            case 'GCP':
+                let respJson = {}
+                try {
+                    respJson = JSON.parse(text)
+                } catch(e) {
+                    // just use empty respJson
+                }
+                const alreadyExistsCode = 6
 
-            if (respJson.code && respJson.code == alreadyExistsCode) {
-                console.warn("GCP device already exists; updating environment vars")
-                updateEnvironmentVars()
-            }
+                alreadyExists = (respJson.code && respJson.code == alreadyExistsCode)
+                break
+            default:
+                // not possible at this point
+                break
+        }
+        if (alreadyExists) {
+            console.warn(`Device already exists on ${process.env.CLOUD_PROVIDER}; updating environment vars`)
+            updateEnvironmentVars()
         }
     }
     return response.ok

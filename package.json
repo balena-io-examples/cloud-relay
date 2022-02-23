@@ -7,6 +7,8 @@
   "dependencies": {
     "aws-iot-device-sdk": "^2.2.11",
     "async-mqtt": "^2.6.1",
+    "azure-iot-device": "^1.17.8",
+    "azure-iot-device-mqtt": "^1.15.8",
     "jsonwebtoken": "^8.5.1",
     "node-fetch": "^3.1.0"
   },

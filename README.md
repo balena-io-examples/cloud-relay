@@ -4,11 +4,11 @@
 
 ![Overview](doc/overview.png)
 
-Cloud Relay accepts application data via MQTT and relays it to a cloud provider's IoT Core facility. You only need to provide the data, and Cloud Relay takes care of messaging with the cloud provider. Cloud Relay works with AWS IoT Core and Google Cloud (GCP) IoT Core.
+Cloud Relay accepts application data via MQTT and relays it to a cloud provider's IoT Core facility. You only need to provide the data, and Cloud Relay takes care of messaging with the cloud provider. Cloud Relay works with AWS IoT, Azure IoT, and Google Cloud (GCP) IoT.
 
 ## Getting Started
 
-You must install the Cloud Relay container on your device as well as set up the cloud provider's IoT service. Balena also provides cloud functions for AWS and Google Cloud that expose an HTTP endpoint to initially provision each device. See the _Cloud Provisioning_ section below.
+You must install the Cloud Relay container on your device as well as set up the cloud provider's IoT service. Balena also provides cloud functions for AWS, Azure and GCP that expose an HTTP endpoint to initially provision each device. See the _Cloud Provisioning_ section below.
 
 ### Device
 We will use the docker-compose [example script](docker-compose.yml), which provides WiFi metrics data. First create a multi-container fleet in balenaCloud and provision a device with balenaOS. See the [online docs](https://www.balena.io/docs/learn/getting-started/raspberrypi3/nodejs/) for details. Next define the fleet variables from the cloud provider's setup, as described in the *Configuration* section below. Finally push the docker-compose script to the balena builders, substituting your fleet's name for `<myFleet>` in the commands below.
@@ -38,6 +38,7 @@ We have developed projects that automate this provisioning, including use of the
 | Provider / Cloud Function | GitHub project |
 |----------|-------------------|
 | AWS Lambda | [aws-iot-provision](https://github.com/balena-io-examples/aws-iot-provision) |
+| Azure Functions | [azure-iot-provision](https://github.com/balena-io-examples/azure-iot-provision) |
 | GCP Cloud Functions | [gcp-iot-provision](https://github.com/balena-io-examples/gcp-iot-provision) |
 
 ## Configuration
@@ -46,10 +47,10 @@ Environment variables, probably common to all devices so may be defined as balen
 
 |  Name | Value | Notes |
 |-------|-------|-------|
-| CLOUD_PROVIDER | default `AWS`<br><br>or `GCP` | |
-|  PROVISION_URL   | AWS Lambda like<br>`https://xxxxxxxx.execute-api.<region>.amazonaws.com/default/provision`<br><br>GCP Cloud Functions like<br>`https://<region>-<projectID>.cloudfunctions.net/provision` | URL to trigger the provisioning cloud function. See the README for the cloud provisioning projects above for specifics.|
+| CLOUD_PROVIDER | default `AWS`<br><br>`AZURE` or `GCP` | |
+|  PROVISION_URL   | AWS Lambda like<br>`https://xxxxxxxx.execute-api.<region>.amazonaws.com/default/provision`<br><br>Azure Functions like<br>`https://<function-app>.azurewebsites.net/api/provision`<br><br>GCP Cloud Functions like<br>`https://<region>-<projectID>.cloudfunctions.net/provision` | URL to trigger the provisioning cloud function. See the README for the cloud provisioning projects above for specifics.|
 | PRODUCER_TOPIC| default `sensors` | Message topic from data producer |
-| CLOUD_CONSUMER_TOPIC| AWS default `sensors`<br><br>GCP default `events` | Message topic expected by cloud consumer. For GCP, `events` is the default *telemetry* topic. As the docs [describe](https://cloud.google.com/iot/docs/how-tos/mqtt-bridge#publishing_telemetry_events_to_additional_cloud_pubsub_topics), you also may publish to a subfolder like `events/alerts`. |
+| CLOUD_CONSUMER_TOPIC| AWS, Azure default `sensors`<br><br>GCP default `events` | Message topic expected by cloud consumer. For Azure `sensors` is the value for the `topic` entry in the `properties` map.<br><br>For GCP, `events` is the default *telemetry* topic. As the docs [describe](https://cloud.google.com/iot/docs/how-tos/mqtt-bridge#publishing_telemetry_events_to_additional_cloud_pubsub_topics), you also may publish to a subfolder like `events/alerts`. |
 
 **AWS** specific variables
 
@@ -58,6 +59,14 @@ Environment variables, probably common to all devices so may be defined as balen
 | AWS_DATA_ENDPOINT| like `xxxxxxxx-ats.iot.<region>.amazonaws.com                               ` | Host name to receive data. See *Settings* in the AWS IoT console. |
 
 The provisioning tool generates AWS_CERT and AWS_PRIVATE_KEY.
+
+**Azure** specific variables
+
+|  Name | Value | Notes |
+|-------|-------|-------|
+| AZURE_HUB_HOST | like `<iot-hub-name>.azure-devices.net` | Host name to receive data. See *Overview* for the IoT Hub in the Azure portal. |
+
+The provisioning tool generates AZURE_CERT and AZURE_PRIVATE_KEY.
 
 **GCP** specific variables
 

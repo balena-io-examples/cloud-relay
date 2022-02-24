@@ -4,7 +4,7 @@
 
 ![Overview](doc/overview.png)
 
-Cloud Relay accepts application data via MQTT and relays it to a cloud provider's IoT Core facility. You only need to provide the data, and Cloud Relay takes care of messaging with the cloud provider. Cloud Relay works with AWS IoT, Azure IoT, and Google Cloud (GCP) IoT.
+Cloud Relay accepts application data via MQTT and relays it to a cloud provider's IoT Core facility. You only need to provide the data, and Cloud Relay takes care of messaging with the cloud provider. Cloud Relay works with AWS, Azure, and Google Cloud (GCP).
 
 ## Getting Started
 

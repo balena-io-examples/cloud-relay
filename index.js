@@ -131,11 +131,26 @@ async function connectLocal() {
     } while(count < maxTries)
 }
 
-/** Runs the relay. Wraps all execution in a try/catch block. */
+/**
+ * Runs the relay. Wraps all execution in a try/catch block.
+ * 
+ * Initializes CLOUD_PROVIDER variable to identify the provider based on the
+ * presence of provider specific variables above. You may explicitly define
+ * an environment variable with this name for development purposes.
+ */
 async function start() {
     //console.log("env: " + JSON.stringify(process.env))
     if (!process.env.CLOUD_PROVIDER) {
-        process.env.CLOUD_PROVIDER = 'AWS'
+        if (process.env.AWS_DATA_ENDPOINT) {
+            process.env.CLOUD_PROVIDER = 'AWS'
+        } else if (process.env.AZURE_HUB_HOST) {
+            process.env.CLOUD_PROVIDER = 'AZURE'
+        } else if (process.env.GCP_PROJECT_ID) {
+            process.env.CLOUD_PROVIDER = 'GCP'
+        } else {
+            console.error("Can't determine cloud provider")
+            return
+        }
     }
     let cloudMsgr = Messenger.create(process.env.CLOUD_PROVIDER)
     console.log(`Created cloud messenger: ${cloudMsgr}`)

@@ -47,7 +47,6 @@ Environment variables, probably common to all devices so may be defined as balen
 
 |  Name | Value | Notes |
 |-------|-------|-------|
-| CLOUD_PROVIDER | default `AWS`<br><br>`AZURE` or `GCP` | |
 |  PROVISION_URL   | AWS Lambda like<br>`https://xxxxxxxx.execute-api.<region>.amazonaws.com/default/provision`<br><br>Azure Functions like<br>`https://<function-app>.azurewebsites.net/api/provision`<br><br>GCP Cloud Functions like<br>`https://<region>-<projectID>.cloudfunctions.net/provision` | URL to trigger the provisioning cloud function. See the README for the cloud provisioning projects above for specifics.|
 | PRODUCER_TOPIC| default `sensors` | Message topic from data producer |
 | CLOUD_CONSUMER_TOPIC| AWS, Azure default `sensors`<br><br>GCP default `events` | Message topic expected by cloud consumer. For Azure `sensors` is the value for the `topic` entry in the `properties` map.<br><br>For GCP, `events` is the default *telemetry* topic. As the docs [describe](https://cloud.google.com/iot/docs/how-tos/mqtt-bridge#publishing_telemetry_events_to_additional_cloud_pubsub_topics), you also may publish to a subfolder like `events/alerts`. |

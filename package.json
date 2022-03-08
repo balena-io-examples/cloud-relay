@@ -1,7 +1,7 @@
 {
   "name": "cloud-relay",
-  "version": "0.0.1",
-  "description": "Setup and push data from IoT device to cloud provider",
+  "version": "0.1.0",
+  "description": "balenaBlock to push data from IoT device to cloud provider",
   "main": "index.js",
   "type":"module",
   "dependencies": {
@@ -25,5 +25,5 @@
   "bugs": {
     "url": "https://github.com/balena-io-examples/cloud-relay/issues"
   },
-  "homepage": "https://github.com/balena-projects/balena-aws-device#readme"
+  "homepage": "https://github.com/balena-io-examples/cloud-relay"
 }

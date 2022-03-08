@@ -35,22 +35,9 @@ async function provision(uuid) {
     }
     console.log("Provisioning with cloud provider")
 
-    let bodyJson = null
-    switch (process.env.CLOUD_PROVIDER) {
-        case 'AWS':
-        case 'AZURE':
-            bodyJson = `{ "uuid": "${uuid}", "method": "POST" }`
-            break
-        case 'GCP':
-            bodyJson = `{ "uuid": "${uuid}" }`
-            break
-        default:
-            throw Error(`cloudProvider ${process.env.CLOUD_PROVIDER} unrecognized`)
-    }
-
     const response = await fetch(url, {
         method: 'POST',
-        body: bodyJson,
+        body: `{ "uuid": "${uuid}", "balena_service": "${process.env.RESIN_SERVICE_NAME}" }`,
         headers: {'Cache-Control': 'no-cache', 'Content-Type': 'application/json'}
     })
     const text = await response.text()
@@ -135,8 +122,8 @@ async function connectLocal() {
  * Runs the relay. Wraps all execution in a try/catch block.
  * 
  * Initializes CLOUD_PROVIDER variable to identify the provider based on the
- * presence of provider specific variables above. You may explicitly define
- * an environment variable with this name for development purposes.
+ * presence of provider specific variables. Alternatively, you may explicitly
+ * pre-define a CLOUD_PROVIDER variable.
  */
 async function start() {
     //console.log("env: " + JSON.stringify(process.env))

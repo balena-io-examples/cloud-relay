@@ -69,4 +69,4 @@ The provisioning tool generates AZURE_CERT and AZURE_PRIVATE_KEY.
 
 **GCP** specific variables
 
-No GCP specific variables for configuration. However, the provisioning tool generates GCP_CLIENT_PATH, GCP_DATA_TOPIC_ROOT, GCP_PRIVATE_KEY, and GCP_PROJECT_ID.
+No GCP specific variables for configuration! However, the provisioning tool generates GCP_CLIENT_PATH, GCP_DATA_TOPIC_ROOT, GCP_PRIVATE_KEY, and GCP_PROJECT_ID.

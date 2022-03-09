@@ -8,17 +8,18 @@ Cloud Relay accepts application data via MQTT and relays it to a cloud provider'
 
 ## Getting Started
 
-You must install the Cloud Relay container on your device as well as set up the cloud provider's IoT service. Balena also provides cloud functions for AWS, Azure and GCP that expose an HTTP endpoint to initially provision each device. See the _Cloud Provisioning_ section below.
+You first must set up the cloud provider's IoT service. Balena also provides cloud functions for AWS, Azure and GCP that expose an HTTP endpoint to initially provision each device. See the _Cloud Provisioning_ section below.
 
 ### Device
-We will use the docker-compose [example script](docker-compose.yml), which provides WiFi metrics data. First create a multi-container fleet in balenaCloud and provision a device with balenaOS. See the [online docs](https://www.balena.io/docs/learn/getting-started/raspberrypi3/nodejs/) for details. Next define the fleet variables from the cloud provider's setup, as described in the *Configuration* section below. Finally push the docker-compose script to the balena builders, substituting your fleet's name for `<myFleet>` in the commands below.
+To setup the balena device, we will use a docker-compose [example script](doc/wifi-example/docker-compose.yml) that includes containers for generation of WiFi metrics data, an MQTT broker, and the Cloud Relay block itself. First create a multi-container fleet in balenaCloud and provision a device with balenaOS. See the [online docs](https://www.balena.io/docs/learn/getting-started/raspberrypi3/nodejs/) for details. Next define fleet variables as described in the *Configuration* section below. Finally push the docker-compose script to the balena builders, substituting your fleet's name for `<myFleet>` in the commands below.
 
 ```
     git clone https://github.com/balena-io-examples/cloud-relay.git
+    cd cloud-relay/doc/wifi-example
     balena push <myFleet>
 ```
 
-After any automated cloud provisioning, you should see data flowing through the cloud relay to the provider's MQTT broker, like the log output below.
+Cloud Relay first will attempt to provision the device if required, using `PROVISION_URL`. Once that completes, you should see data flowing through the cloud relay to the provider's MQTT broker, like the log output below.
 
 ```
 sensor  publishing sample: {} {'short_uuid': 'ab24d4b', 'quality_value': '70', 'quality_max': 70, 'signal_level': -39.0}

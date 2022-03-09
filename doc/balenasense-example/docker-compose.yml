@@ -1,0 +1,52 @@
+version: '2'
+volumes:
+    sense-data:
+    dashboard-data:
+services:
+  influxdb:
+    restart: always
+    image: arm32v7/influxdb@sha256:2fed9b09a672cab330ac3ea1f03616e6821f2235bda64d549f605ef0d7081911
+    volumes:
+      - 'sense-data:/var/lib/influxdb'
+  dashboard:
+    image: balenablocks/dashboard
+    restart: always
+    volumes:
+        - 'dashboard-data:/data'
+    ports:
+        - '80'
+  sensor:
+    image: balenablocks/sensor
+    privileged: true
+    labels:
+      io.balena.features.kernel-modules: '1'
+      io.balena.features.sysfs: '1'
+      io.balena.features.supervisor-api: '1'
+    environment:
+      RAW_VALUES: '0'
+      COLLAPSE_FIELDS: '1'
+      # workaround issue balenablocks/sensor#8
+      MQTT_ADDRESS: 'mqtt'
+    depends_on:
+        - "mqtt"
+  connector:
+    image: balenablocks/connector
+    restart: always
+    labels:
+      io.balena.features.balena-api: '1'
+    privileged: true
+    ports:
+      - "8080"
+  mqtt:
+    image: eclipse-mosquitto:1.6.15
+    ports:
+      - "1883:1883"
+    restart: always  
+  cloud-relay:
+    image: kb2ma/cloud-relay
+    restart: unless-stopped
+    network_mode: host
+    labels:
+      io.balena.features.supervisor-api: '1'
+    depends_on:
+        - "mqtt"

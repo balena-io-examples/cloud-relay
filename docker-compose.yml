@@ -1,4 +1,3 @@
-# Example script to push WiFi metrics to the cloud
 version: '2'
 services:
   cloud-relay:
@@ -7,26 +6,3 @@ services:
     network_mode: host
     labels:
       io.balena.features.supervisor-api: '1'
-    depends_on:
-        - "mqtt"
-  # collects WiFi metrics
-  sensor:
-    image: kb2ma/sensor
-    privileged: true
-    network_mode: host
-    labels:
-      io.balena.features.kernel-modules: '1'
-      io.balena.features.sysfs: '1'
-      io.balena.features.supervisor-api: '1'
-    depends_on:
-        - "mqtt"
-    environment:
-      MQTT_ADDRESS: '127.0.0.1'
-      RAW_VALUES: '0'
-      COLLAPSE_FIELDS: '1'
-  mqtt:
-    image: eclipse-mosquitto:1.6.15
-    restart: unless-stopped
-    # need host exposure for sensor service, but limit to just this host for security
-    ports:
-      - 127.0.0.1:1883:1883

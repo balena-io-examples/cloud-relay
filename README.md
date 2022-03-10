@@ -11,7 +11,9 @@ Cloud Relay accepts application data via MQTT and relays it to a cloud provider'
 You first must set up the cloud provider's IoT service. Balena also provides cloud functions for AWS, Azure and GCP that expose an HTTP endpoint to initially provision each device. See the _Cloud Provisioning_ section below.
 
 ### Device
-On the balena device, we will use a docker-compose [example script](doc/wifi-example/docker-compose.yml) that includes containers for generation of WiFi metrics data, an MQTT broker, and the Cloud Relay block itself. First create a multi-container fleet in balenaCloud and provision a device with balenaOS. See the [online docs](https://www.balena.io/docs/learn/getting-started/raspberrypi3/nodejs/) for details. Next define fleet variables as described in the *Configuration* section below. Finally push the docker-compose script to the balena builders, substituting your fleet's name for `<myFleet>` in the commands below.
+On the balena device, we will use a docker-compose [example script](doc/wifi-example/docker-compose.yml) that includes containers for generation of WiFi metrics data, an MQTT broker, and the Cloud Relay block itself. First create a multi-container fleet in balenaCloud and provision a device with balenaOS. See the [online docs](https://www.balena.io/docs/learn/getting-started/raspberrypi3/nodejs/) for details.
+
+Next define fleet variables as described in the *Configuration* section below. Finally push the docker-compose script to the balena builders, substituting your fleet's name for `<myFleet>` in the commands below.
 
 ```
     git clone https://github.com/balena-io-examples/cloud-relay.git
@@ -44,30 +46,37 @@ We have developed projects that automate this provisioning, including use of the
 
 ## Configuration
 
-Environment variables, probably common to all devices so may be defined as balena **Fleet** variables.
+Environment variables, probably common to all devices so may be defined as balena **Fleet** variables. This section is organized by cloud provider. In all cases Cloud Relay must know the message topic used by the data producer.
 
 |  Name | Value | Notes |
 |-------|-------|-------|
-|  PROVISION_URL   | AWS Lambda like<br>`https://xxxxxxxx.execute-api.<region>.amazonaws.com/default/provision`<br><br>Azure Functions like<br>`https://<function-app>.azurewebsites.net/api/provision`<br><br>GCP Cloud Functions like<br>`https://<region>-<projectID>.cloudfunctions.net/provision` | URL to trigger the provisioning cloud function. See the README for the cloud provisioning projects above for specifics.|
-| PRODUCER_TOPIC| default `sensors` | Message topic from data producer |
-| CLOUD_CONSUMER_TOPIC| AWS, Azure default `sensors`<br><br>GCP default `events` | Message topic expected by cloud consumer. For Azure `sensors` is the value for the `topic` entry in the `properties` map.<br><br>For GCP, `events` is the default *telemetry* topic. As the docs [describe](https://cloud.google.com/iot/docs/how-tos/mqtt-bridge#publishing_telemetry_events_to_additional_cloud_pubsub_topics), you also may publish to a subfolder like `events/alerts`. |
+| PRODUCER_TOPIC| default `sensors` | Message topic from data producer. `sensors` is used by the [Sensor](https://github.com/balenablocks/sensor) block. |
 
-**AWS** specific variables
+
+### AWS
 
 |  Name | Value | Notes |
 |-------|-------|-------|
-| AWS_DATA_ENDPOINT| like `xxxxxxxx-ats.iot.<region>.amazonaws.com                               ` | Host name to receive data. See *Settings* in the AWS IoT console. |
+|  PROVISION_URL   | like<br>`https://xxxxxxxx.execute-api.<region>.amazonaws.com/default/provision` | URL to trigger the provisioning cloud function.|
+| AWS_DATA_ENDPOINT| like<br>`xxxxxxxx-ats.iot.<region>.amazonaws.com                               ` | Host name to receive data. See *Settings* in the AWS IoT console. |
+| CLOUD_CONSUMER_TOPIC| default `sensors` | Message topic expected by cloud consumer. |
 
 The provisioning tool generates AWS_CERT and AWS_PRIVATE_KEY.
 
-**Azure** specific variables
+### Azure
 
 |  Name | Value | Notes |
 |-------|-------|-------|
-| AZURE_HUB_HOST | like `<iot-hub-name>.azure-devices.net` | Host name to receive data. See *Overview* for the IoT Hub in the Azure portal. |
+|  PROVISION_URL   | like<br>`https://<region>-<projectID>.cloudfunctions.net/provision` | URL to trigger the provisioning cloud function.|
+| AZURE_HUB_HOST | like<br>`<iot-hub-name>.azure-devices.net` | Host name to receive data. See *Overview* for the IoT Hub in the Azure portal. |
+| CLOUD_CONSUMER_TOPIC| default `sensors`| Cloud Relay creates a `topic` key with this value in the `properties` map included in the message to Azure. |
 
 The provisioning tool generates AZURE_CERT and AZURE_PRIVATE_KEY.
 
-**GCP** specific variables
+### GCP
 
-No GCP specific variables for configuration! However, the provisioning tool generates GCP_CLIENT_PATH, GCP_DATA_TOPIC_ROOT, GCP_PRIVATE_KEY, and GCP_PROJECT_ID.
+|  Name | Value | Notes |
+|-------|-------|-------|
+|  PROVISION_URL   | like<br>`https://<region>-<projectID>.cloudfunctions.net/provision` | URL to trigger the provisioning cloud function. |
+
+The provisioning tool generates GCP_CLIENT_PATH, GCP_DATA_TOPIC_ROOT, GCP_PRIVATE_KEY, and GCP_PROJECT_ID.

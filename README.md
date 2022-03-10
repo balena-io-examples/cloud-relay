@@ -59,7 +59,7 @@ Environment variables, probably common to all devices so may be defined as balen
 |-------|-------|-------|
 |  PROVISION_URL   | like<br>`https://xxxxxxxx.execute-api.<region>.amazonaws.com/default/provision` | URL to trigger the provisioning cloud function.|
 | AWS_DATA_ENDPOINT| like<br>`xxxxxxxx-ats.iot.<region>.amazonaws.com                               ` | Host name to receive data. See *Settings* in the AWS IoT console. |
-| CLOUD_CONSUMER_TOPIC| default `sensors` | Message topic expected by cloud consumer. |
+| CLOUD_CONSUMER_TOPIC| default `sensors` | Topic for message sent to AWS. |
 
 The provisioning tool generates AWS_CERT and AWS_PRIVATE_KEY.
 
@@ -78,5 +78,6 @@ The provisioning tool generates AZURE_CERT and AZURE_PRIVATE_KEY.
 |  Name | Value | Notes |
 |-------|-------|-------|
 |  PROVISION_URL   | like<br>`https://<region>-<projectID>.cloudfunctions.net/provision` | URL to trigger the provisioning cloud function. |
+| CLOUD_CONSUMER_TOPIC| default `events` | Topic for message sent to GCP, which expects `events` as the default *telemetry* topic. As the docs [describe](https://cloud.google.com/iot/docs/how-tos/mqtt-bridge#publishing_telemetry_events_to_additional_cloud_pubsub_topics), you also may publish to a subfolder like `events/alerts`. |
 
 The provisioning tool generates GCP_CLIENT_PATH, GCP_DATA_TOPIC_ROOT, GCP_PRIVATE_KEY, and GCP_PROJECT_ID.

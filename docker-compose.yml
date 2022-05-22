@@ -1,7 +1,7 @@
 version: '2'
 services:
   cloud-relay:
-    image: kb2ma/cloud-relay
+    build: .
     restart: unless-stopped
     network_mode: host
     labels:

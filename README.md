@@ -32,7 +32,7 @@ sensor  publishing sample: {} {'short_uuid': 'ab24d4b', 'quality_value': '70', '
 
 ### Cloud Provisioning
 
-Cloud Relay triggers secure provisioning of a balena device to the provider's registry before publishing data. This provisioning generates public key credentials as environment variables, which Cloud Relay then uses to communicate with the provider's IoT Core.
+Cloud Relay triggers secure provisioning of a balena device to the provider's registry before publishing data. This provisioning generates public key credentials as environment variables, which are stored on balenaCloud and passed on to the device. Cloud Relay then uses the credentials to communicate with the provider's IoT Core.
 
 ![Provision-Send](doc/provision-send.png)
 

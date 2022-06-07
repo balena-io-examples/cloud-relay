@@ -57,7 +57,7 @@ Environment variables, probably common to all devices so may be defined as balen
 
 |  Name | Value | Notes |
 |-------|-------|-------|
-|  PROVISION_URL   | like<br>`https://xxxxxxxx.execute-api.<region>.amazonaws.com/default/provision` | URL to trigger the provisioning cloud function.|
+|  PROVISION_URL   | like<br>`https://xxxxxxxx.execute-api.<region>.amazonaws.com/default/provision` | URL to trigger the provisioning cloud function. See *Functions -> provision -> Configuration -> Triggers* in the AWS Lambda console. |
 | AWS_DATA_ENDPOINT| like<br>`xxxxxxxx-ats.iot.<region>.amazonaws.com                               ` | Host name to receive data. See *Settings* in the AWS IoT console. |
 | CLOUD_CONSUMER_TOPIC| default `sensors` | Topic for message sent to AWS. |
 

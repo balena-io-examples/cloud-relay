@@ -61,7 +61,7 @@ Environment variables, probably common to all devices so may be defined as balen
 | AWS_DATA_ENDPOINT| like<br>`xxxxxxxx-ats.iot.<region>.amazonaws.com                               ` | Host name to receive data. See *Settings* in the AWS IoT console. |
 | CLOUD_CONSUMER_TOPIC| default `sensors` | Topic for message sent to AWS. |
 
-The provisioning tool generates AWS_CERT and AWS_PRIVATE_KEY.
+The provisioning tool [generates](https://github.com/balena-io-examples/aws-iot-provision#device-environment-variables) AWS_CERT and AWS_PRIVATE_KEY.
 
 ### Azure
 
@@ -71,7 +71,7 @@ The provisioning tool generates AWS_CERT and AWS_PRIVATE_KEY.
 | AZURE_HUB_HOST | like<br>`<iot-hub-name>.azure-devices.net` | Host name to receive data. See *Overview* for the IoT Hub in the Azure portal. |
 | CLOUD_CONSUMER_TOPIC| default `sensors`| Cloud Relay creates a `topic` key with this value in the `properties` map included in the message to Azure. |
 
-The provisioning tool generates AZURE_CERT and AZURE_PRIVATE_KEY.
+The provisioning tool [generates](https://github.com/balena-io-examples/azure-iot-provision#device-environment-variables) AZURE_CERT and AZURE_PRIVATE_KEY.
 
 ### GCP
 
@@ -80,4 +80,4 @@ The provisioning tool generates AZURE_CERT and AZURE_PRIVATE_KEY.
 |  PROVISION_URL   | like<br>`https://<region>-<projectID>.cloudfunctions.net/provision` | URL to trigger the provisioning cloud function. |
 | CLOUD_CONSUMER_TOPIC| default `events` | Topic for message sent to GCP, which expects `events` as the default *telemetry* topic. As the docs [describe](https://cloud.google.com/iot/docs/how-tos/mqtt-bridge#publishing_telemetry_events_to_additional_cloud_pubsub_topics), you also may publish to a subfolder like `events/alerts`. |
 
-The provisioning tool generates GCP_CLIENT_PATH, GCP_DATA_TOPIC_ROOT, GCP_PRIVATE_KEY, and GCP_PROJECT_ID.
+The provisioning tool [generates](https://github.com/balena-io-examples/gcp-iot-provision#device-environment-variables) GCP_CLIENT_PATH, GCP_DATA_TOPIC_ROOT, GCP_PRIVATE_KEY, and GCP_PROJECT_ID.

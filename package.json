@@ -5,14 +5,16 @@
   "main": "index.js",
   "type": "module",
   "dependencies": {
-    "aws-iot-device-sdk": "^2.2.11",
+    "@balena/env-parsing": "^1.1.5",
+    "@balena/lint": "^6.2.1",
+    "@google-cloud/pubsub": "^3.2.1",
     "async-mqtt": "^2.6.1",
+    "aws-iot-device-sdk": "^2.2.11",
     "azure-iot-device": "^1.17.8",
     "azure-iot-device-mqtt": "^1.15.8",
     "jsonwebtoken": "^8.5.1",
     "node-fetch": "^3.1.0"
   },
-  "devDependencies": {},
   "scripts": {
     "start": "node index.js",
     "test": "echo \"No tests yet\" && exit 0"

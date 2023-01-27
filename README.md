@@ -67,7 +67,7 @@ AWS_CERT and AWS_PRIVATE_KEY variables for each device are [generated](https://g
 
 |  Name | Value | Notes |
 |-------|-------|-------|
-|  PROVISION_URL   | like<br>`https://<region>-<projectID>.cloudfunctions.net/provision` | URL to trigger the provisioning cloud function.|
+|  PROVISION_URL   | like<br>`https://xxxx.azurewebsites.net/api/provision` | URL to trigger the provisioning cloud function.|
 | AZURE_HUB_HOST | like<br>`<iot-hub-name>.azure-devices.net` | Host name to receive data. See *Overview* for the IoT Hub in the Azure portal. |
 | CLOUD_CONSUMER_TOPIC| default `sensors`| Cloud Relay creates a `topic` key with this value in the `properties` map included in the message to Azure. |
 

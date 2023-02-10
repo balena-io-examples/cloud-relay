@@ -1,4 +1,19 @@
 - commits:
+    - subject: Fix automated determination when GCP is cloud provider
+      hash: c36c040bb047fa61e5b360f1ed3d2a9cecae0090
+      body: |
+        Also update README to describe CLOUD_PROVIDER env var.
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Ken Bannister <kb2ma@runbox.com>
+        signed-off-by: Ken Bannister <kb2ma@runbox.com>
+      author: Ken Bannister
+      nested: []
+  version: 0.2.10
+  title: ""
+  date: 2023-02-10T18:06:55.315Z
+- commits:
     - subject: Changes to flowzone CI
       hash: 75311bc5dc695c803dd8b00df389bead0895c48e
       body: ""

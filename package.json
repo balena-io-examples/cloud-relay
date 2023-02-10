@@ -4,6 +4,7 @@
   "description": "balenaBlock to push data from IoT device to cloud provider",
   "main": "index.js",
   "type": "module",
+  "private": true,
   "dependencies": {
     "aws-iot-device-sdk": "^2.2.11",
     "async-mqtt": "^2.6.1",

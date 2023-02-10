@@ -51,6 +51,7 @@ Environment variables, probably common to all devices so may be defined as balen
 |  Name | Value | Notes |
 |-------|-------|-------|
 | PRODUCER_TOPIC| default `sensors` | Message topic from data producer. `sensors` is used by the [Sensor](https://github.com/balenablocks/sensor) block. |
+| CLOUD_PROVIDER | AWS, AZURE, or GCP | *Optional*, by default Cloud Relay can determine the provider. Useful for a custom provisioning method. |
 
 
 ### AWS

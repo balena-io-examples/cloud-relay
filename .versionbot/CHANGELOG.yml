@@ -1,0 +1,250 @@
+- commits:
+    - subject: Changes to flowzone CI
+      hash: 75311bc5dc695c803dd8b00df389bead0895c48e
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Otávio Jacobi
+      nested: []
+    - subject: Fix Azure provision URL format
+      hash: a2e22ca5c8b9063c408ec62e27ea15707ae8b464
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Ken Bannister <kb2ma@runbox.com>
+        signed-off-by: Ken Bannister <kb2ma@runbox.com>
+      author: Ken Bannister
+      nested: []
+  version: 0.2.9
+  title: ""
+  date: 2023-02-10T17:56:29.148Z
+- version: 0.2.8
+  date: 2022-07-14T22:28:54Z
+  commits:
+    - hash: c6339616602a761a23497fca406b12bc42de7077
+      author: Ken Bannister
+      footers:
+        change-type: patch
+        signed-off-by: Ken Bannister <kb2ma@runbox.com>
+      subject: Add balena repo.yml file for node type
+      body: null
+- version: 0.2.7
+- date: 2022-07-03T13:53:08Z
+- commits:
+    - hash: f7c20438b66cb8f477edf0fe79de149518e323b9
+- commits:
+    - author: Ken Bannister
+- commits:
+    - footers:
+        change-type: patch
+- commits:
+    - footers:
+        signed-off-by: Ken Bannister <kb2ma@runbox.com>
+- commits:
+    - subject: Refine text for per device variables from provisioning tool
+- commits:
+    - body: null
+- version: 0.2.6
+- date: 2022-07-02T14:19:05Z
+- commits:
+    - hash: f6ca5770686d1fae993bf6e556539ae7bced9bc2
+- commits:
+    - author: Ken Bannister
+- commits:
+    - footers:
+        change-type: patch
+- commits:
+    - footers:
+        signed-off-by: Ken Bannister <kb2ma@runbox.com>
+- commits:
+    - subject: Add link to generated env variables in provision repos
+- commits:
+    - body: null
+- version: 0.2.5
+- date: 2022-06-07T23:15:13Z
+- commits:
+    - hash: 51129e448e460cba028ba7031b891ab3a8166190
+- commits:
+    - author: Ken Bannister
+- commits:
+    - footers:
+        change-type: patch
+- commits:
+    - footers:
+        signed-off-by: Ken Bannister <kb2ma@runbox.com>
+- commits:
+    - subject: Minor doc improvement
+- commits:
+    - body: null
+- version: 0.2.4
+- date: 2022-06-05T12:43:25Z
+- commits:
+    - hash: bd13047e0b4ee0b986f8d57d94a2ba145a357b83
+- commits:
+    - author: Ken Bannister
+- commits:
+    - footers:
+        change-type: patch
+- commits:
+    - footers:
+        signed-off-by: Ken Bannister <kb2ma@runbox.com>
+- commits:
+    - subject: Include balenaCloud when describe provisioning
+- commits:
+    - body: null
+- version: 0.2.3
+- date: 2022-05-23T19:21:40Z
+- commits:
+    - hash: b9073ed92a9f8d56dc430cb3da104671f0d3a134
+- commits:
+    - author: Ken Bannister
+- commits:
+    - footers:
+        change-type: patch
+- commits:
+    - footers:
+        signed-off-by: Ken Bannister <kb2ma@runbox.com>
+- commits:
+    - subject: Use hub bh.cr repo for cloud-relay image
+- commits:
+    - body: null
+- version: 0.2.2
+- date: 2022-05-22T14:39:14Z
+- commits:
+    - hash: 97941592c3058f316ef009b6c6ef278c44f1c87e
+- commits:
+    - author: Ken Bannister
+- commits:
+    - footers:
+        change-type: patch
+- commits:
+    - footers:
+        signed-off-by: Ken Bannister <kb2ma@runbox.com>
+- commits:
+    - subject: Build locally as block on hub
+- commits:
+    - body: null
+- version: 0.2.1
+- date: 2022-05-22T14:11:26Z
+- commits:
+    - hash: 791e8f1fd769e142d31aa8639531651682fa1ee8
+- commits:
+    - author: dependabot[bot]
+- commits:
+    - subject: "patch: bump aws-iot-device-sdk from 2.2.11 to 2.2.12"
+- commits:
+    - body: >-
+        Bumps [aws-iot-device-sdk](https://github.com/aws/aws-iot-device-sdk-js)
+        from 2.2.11 to 2.2.12.
+
+        - [Release notes](https://github.com/aws/aws-iot-device-sdk-js/releases)
+
+        - [Changelog](https://github.com/aws/aws-iot-device-sdk-js/blob/master/CHANGELOG.md)
+
+        - [Commits](https://github.com/aws/aws-iot-device-sdk-js/compare/v2.2.11...v2.2.12)
+
+        ---
+
+        updated-dependencies:
+
+        - dependency-name: aws-iot-device-sdk
+
+        dependency-type: direct:production
+
+        update-type: version-update:semver-patch
+
+        ...
+
+        Signed-off-by: dependabot[bot] <support@github.com>
+- version: 0.2.0
+- date: 2022-05-22T13:56:16Z
+- commits:
+    - hash: 77d03f67684e79c497d6557a11ccbff938c6b1cc
+- commits:
+    - author: Ken Bannister
+- commits:
+    - footers:
+        change-type: patch
+- commits:
+    - footers:
+        signed-off-by: Ken Bannister <kb2ma@runbox.com>
+- commits:
+    - subject: Add dependabot version update configuration file
+- commits:
+    - body: null
+- commits:
+    - hash: a608ea81011d492b730535a949bea5a1cb466830
+- commits:
+    - author: Ken Bannister
+- commits:
+    - footers:
+        change-type: patch
+- commits:
+    - footers:
+        signed-off-by: Ken Bannister <kb2ma@runbox.com>
+- commits:
+    - subject: Workaround versionbot limitation with ES6 modules
+- commits:
+    - body: null
+- commits:
+    - hash: c3917c392923658b8caf78a7cd957c4ee98b980d
+- commits:
+    - author: Ken Bannister
+- commits:
+    - footers:
+        change-type: patch
+- commits:
+    - footers:
+        signed-off-by: Ken Bannister <kb2ma@runbox.com>
+- commits:
+    - subject: Add stub test script
+- commits:
+    - body: null
+- version: 0.1.0
+- date: 2022-03-09T22:59:44Z
+- commits:
+    - hash: b509f3265b0974b54a85ec2c0a74caa71cb8d5dd
+- commits:
+    - author: Ken Bannister
+- commits:
+    - footers:
+        change-type: patch
+- commits:
+    - footers:
+        signed-off-by: Ken Bannister <kb2ma@runbox.com>
+- commits:
+    - subject: Update documentation for true block implementation
+- commits:
+    - body: null
+- commits:
+    - hash: 50f5ed02e10124b1435f1bd2447321cc4f828556
+- commits:
+    - author: Ken Bannister
+- commits:
+    - footers:
+        change-type: patch
+- commits:
+    - footers:
+        signed-off-by: Ken Bannister <kb2ma@runbox.com>
+- commits:
+    - subject: Trivial change for a PR test
+- commits:
+    - body: null
+- version: 0.0.3
+- date: 2022-02-23T01:36:00Z
+- commits:
+    - hash: e1b3ba8e2cdd6f09d2b54bf80866eef1cc9aaa12
+- commits:
+    - author: Ken Bannister
+- commits:
+    - footers:
+        change-type: minor
+- commits:
+    - footers:
+        signed-off-by: Ken Bannister <kb2ma@runbox.com>
+- commits:
+    - subject: Add support for Azure IoT
+- commits:
+    - body: null

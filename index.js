@@ -132,7 +132,7 @@ async function start() {
             process.env.CLOUD_PROVIDER = 'AWS'
         } else if (process.env.AZURE_HUB_HOST) {
             process.env.CLOUD_PROVIDER = 'AZURE'
-        } else if (process.env.GCP_PROJECT_ID) {
+        } else if (process.env.PROVISION_URL && process.env.PROVISION_URL.includes('cloudfunctions.net')) {
             process.env.CLOUD_PROVIDER = 'GCP'
         } else {
             console.error("Can't determine cloud provider")

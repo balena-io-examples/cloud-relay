@@ -1,4 +1,18 @@
 - commits:
+    - subject: Add env variable for GCP messaging host
+      hash: a890e56b168a05b3ca0402041ca47f202ed5e5b6
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Ken Bannister <kb2ma@runbox.com>
+        signed-off-by: Ken Bannister <kb2ma@runbox.com>
+      author: Ken Bannister
+      nested: []
+  version: 0.2.11
+  title: ""
+  date: 2023-02-12T00:58:39.635Z
+- commits:
     - subject: Fix automated determination when GCP is cloud provider
       hash: c36c040bb047fa61e5b360f1ed3d2a9cecae0090
       body: |

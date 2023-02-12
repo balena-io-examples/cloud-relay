@@ -80,5 +80,6 @@ AZURE_CERT and AZURE_PRIVATE_KEY variables for each device are [generated](https
 |-------|-------|-------|
 |  PROVISION_URL   | like<br>`https://<region>-<projectID>.cloudfunctions.net/provision` | URL to trigger the provisioning cloud function. |
 | CLOUD_CONSUMER_TOPIC| default `events` | Topic for message sent to GCP, which expects `events` as the default *telemetry* topic. As the docs [describe](https://cloud.google.com/iot/docs/how-tos/mqtt-bridge#publishing_telemetry_events_to_additional_cloud_pubsub_topics), you also may publish to a subfolder like `events/alerts`. |
+| MESSAGING_HOST | default `mqtt.googleapis.com` | Hostname to receive data. |
 
 GCP_CLIENT_PATH, GCP_DATA_TOPIC_ROOT, GCP_PRIVATE_KEY, and GCP_PROJECT_ID variables for each device are [generated](https://github.com/balena-io-examples/gcp-iot-provision#device-environment-variables) by the provisioning tool.

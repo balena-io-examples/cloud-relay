@@ -6,6 +6,8 @@
 
 Cloud Relay accepts application data via MQTT and relays it to a cloud provider's IoT Core facility. You only need to provide the data, and Cloud Relay takes care of messaging with the cloud provider. Cloud Relay works with AWS, Azure, and Google Cloud (GCP).
 
+**Note:** Google has issued a [deprecation notice](https://cloud.google.com/iot/docs/release-notes#August_16_2022) for the Cloud IoT service due to shutdown in August 2023. Cloud Relay's support for GCP IoT Core will not receive further updates. [ClearBlade](https://www.clearblade.com/iot-core/) provides a replacement IoT Core product that integrates with GCP Pub/Sub in a similar way. The only differences for Cloud Relay are use of a ClearBlade-specific provisioning tool and network messaging host. Cloud Relay now supports ClearBlade on an experimental basis.
+
 ## Getting Started
 
 You first must set up the cloud provider's IoT service. Balena also provides cloud functions for AWS, Azure and GCP that expose an HTTP endpoint to initially provision each device. See the _Cloud Provisioning_ section below.
@@ -28,7 +30,7 @@ sensor  publishing sample: {} {'short_uuid': 'ab24d4b', 'quality_value': '70', '
 sensor  publishing sample: {} {'short_uuid': 'ab24d4b', 'quality_value': '70', 'quality_max': 70, 'signal_level': -39.0}
 ```
 
-**GCP Note** Cloud Relay publishes only to the telemetry (events) topic. It does not publish to the state topic or subscribe to the configuration or commands topics.
+**ClearBlade/GCP Note** Cloud Relay publishes only to the telemetry (events) topic. It does not publish to the state topic or subscribe to the configuration or commands topics.
 
 ### Cloud Provisioning
 
@@ -42,7 +44,8 @@ We have developed projects that automate this provisioning, including use of the
 |----------|-------------------|
 | AWS Lambda | [aws-iot-provision](https://github.com/balena-io-examples/aws-iot-provision) |
 | Azure Functions | [azure-iot-provision](https://github.com/balena-io-examples/azure-iot-provision) |
-| GCP Cloud Functions | [gcp-iot-provision](https://github.com/balena-io-examples/gcp-iot-provision) |
+| GCP Cloud Functions for ClearBlade | [cb-gcp-iot-provision](https://github.com/balena-io-examples/cb-gcp-iot-provision) |
+| GCP Cloud Functions for Google IoT Core (deprecated) | [gcp-iot-provision](https://github.com/balena-io-examples/gcp-iot-provision) |
 
 ## Configuration
 
@@ -51,7 +54,7 @@ Environment variables, probably common to all devices so may be defined as balen
 |  Name | Value | Notes |
 |-------|-------|-------|
 | PRODUCER_TOPIC| default `sensors` | Message topic from data producer. `sensors` is used by the [Sensor](https://github.com/balenablocks/sensor) block. |
-| CLOUD_PROVIDER | AWS, AZURE, or GCP | *Optional*, by default Cloud Relay can determine the provider. Useful for a custom provisioning method. |
+| CLOUD_PROVIDER | AWS, AZURE, or GCP | *Optional*, by default Cloud Relay can determine the provider based on  other environment variables as described below. However, explicitly defining the cloud provider is useful for a custom provisioning method.<br>Use GCP for ClearBlade as well, and see the *ClearBlade/GCP* section below. |
 
 
 ### AWS
@@ -74,12 +77,12 @@ AWS_CERT and AWS_PRIVATE_KEY variables for each device are [generated](https://g
 
 AZURE_CERT and AZURE_PRIVATE_KEY variables for each device are [generated](https://github.com/balena-io-examples/azure-iot-provision#device-environment-variables) by the provisioning tool.
 
-### GCP
+### ClearBlade / GCP
 
 |  Name | Value | Notes |
 |-------|-------|-------|
 |  PROVISION_URL   | like<br>`https://<region>-<projectID>.cloudfunctions.net/provision` | URL to trigger the provisioning cloud function. |
+| MESSAGING_HOST | default `mqtt.googleapis.com` | Hostname to receive data. The default is for Google IoT Core. See ClearBlade [docs](https://clearblade.atlassian.net/wiki/spaces/IC/pages/2210299905/Retargeting+Devices) for their IoT Core hosts. |
 | CLOUD_CONSUMER_TOPIC| default `events` | Topic for message sent to GCP, which expects `events` as the default *telemetry* topic. As the docs [describe](https://cloud.google.com/iot/docs/how-tos/mqtt-bridge#publishing_telemetry_events_to_additional_cloud_pubsub_topics), you also may publish to a subfolder like `events/alerts`. |
-| MESSAGING_HOST | default `mqtt.googleapis.com` | Hostname to receive data. |
 
-GCP_CLIENT_PATH, GCP_DATA_TOPIC_ROOT, GCP_PRIVATE_KEY, and GCP_PROJECT_ID variables for each device are [generated](https://github.com/balena-io-examples/gcp-iot-provision#device-environment-variables) by the provisioning tool.
+GCP_CLIENT_PATH, GCP_DATA_TOPIC_ROOT, GCP_PRIVATE_KEY, and GCP_PROJECT_ID variables for each device are [generated](https://github.com/balena-io-examples/gcp-iot-provision#device-environment-variables) by the provisioning tool. The ClearBlade provisioning tool uses these same variable names.

@@ -1,4 +1,28 @@
 - commits:
+    - subject: Minor comment and log test updates
+      hash: cf1d6d71c2d7888657da3cee82e35a6a0237f916
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Ken Bannister <kb2ma@runbox.com>
+        signed-off-by: Ken Bannister <kb2ma@runbox.com>
+      author: Ken Bannister
+      nested: []
+    - subject: Update docs to include ClearBlade
+      hash: d8561bfb7988f44c54a163c58bddcef081edf6f5
+      body: ""
+      footer:
+        Change-type: minor
+        change-type: minor
+        Signed-off-by: Ken Bannister <kb2ma@runbox.com>
+        signed-off-by: Ken Bannister <kb2ma@runbox.com>
+      author: Ken Bannister
+      nested: []
+  version: 0.3.0
+  title: ""
+  date: 2023-02-25T16:26:07.837Z
+- commits:
     - subject: Add env variable for GCP messaging host
       hash: a890e56b168a05b3ca0402041ca47f202ed5e5b6
       body: ""

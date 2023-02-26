@@ -1,4 +1,18 @@
 - commits:
+    - subject: Fix typo in org name
+      hash: 3f3a0b1383c7300b40d0b3008b3dc35491bb3f1e
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Ken Bannister <kb2ma@runbox.com>
+        signed-off-by: Ken Bannister <kb2ma@runbox.com>
+      author: Ken Bannister
+      nested: []
+  version: 0.3.3
+  title: ""
+  date: 2023-02-26T19:19:39.802Z
+- commits:
     - subject: Workaround build error with base image arch
       hash: 999515a33171aa42879a1cb8752f11dc3fcf12ce
       body: ""

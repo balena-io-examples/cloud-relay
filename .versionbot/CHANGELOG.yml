@@ -1,4 +1,20 @@
 - commits:
+    - subject: Simplify README Getting Started
+      hash: b1c630f6c72c6ad64bc7ba703a3045260781e774
+      body: |
+        Use Cloud Relay starter fleet via a Deploy with Balena button.
+        Also remove WiFi example.
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Ken Bannister <kb2ma@runbox.com>
+        signed-off-by: Ken Bannister <kb2ma@runbox.com>
+      author: Ken Bannister
+      nested: []
+  version: 0.3.1
+  title: ""
+  date: 2023-02-26T16:39:19.109Z
+- commits:
     - subject: Minor comment and log test updates
       hash: cf1d6d71c2d7888657da3cee82e35a6a0237f916
       body: ""

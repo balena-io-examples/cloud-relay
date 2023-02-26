@@ -13,21 +13,18 @@ Cloud Relay accepts application data via MQTT and relays it to a cloud provider'
 You first must set up the cloud provider's IoT service. Balena also provides cloud functions for AWS, Azure and GCP that expose an HTTP endpoint to initially provision each device. See the _Cloud Provisioning_ section below.
 
 ### Device
-On the balena device, we will use a docker-compose [example script](doc/wifi-example/docker-compose.yml) that includes containers for generation of WiFi metrics data, an MQTT broker, and the Cloud Relay block itself. First create a multi-container fleet in balenaCloud and provision a device with balenaOS. See the [online docs](https://www.balena.io/docs/learn/getting-started/raspberrypi3/nodejs/) for details.
 
-Next define fleet variables as described in the *Configuration* section below. Finally push the docker-compose script to the balena builders, substituting your fleet's name for `<myFleet>` in the commands below.
+We will create a fleet to push system metrics data to the cloud provider and add a device to it. Simply click on the *Deploy with balena* button below to create a fleet from this [docker-compose](https://github.com/balena-io-examples/cloud-relay-starter/blob/master/docker-compose.yml) file.
 
-```
-    git clone https://github.com/balena-io-examples/cloud-relay.git
-    cd cloud-relay/doc/wifi-example
-    balena push <myFleet>
-```
+[![balena deploy button](https://www.balena.io/deploy.svg)](https://dashboard.balena-cloud.com/deploy?repoUrl=https://github.com/balena-io-examples/network-metrics-logger)
 
-Cloud Relay first will attempt to provision the device if required, using `PROVISION_URL`. Once that completes, you should see data flowing through the cloud relay to the provider's MQTT broker, like the log output below.
+Next define fleet variables as described in the *Configuration* section below. Finally, add a device to the fleet as prompted from the dashboard.
+
+Cloud Relay first will attempt to provision the device with the cloud provider, using `PROVISION_URL`. Once that completes, you should see data flowing from the system-metrics container through the cloud relay to the provider's MQTT broker, like the log output below.
 
 ```
-sensor  publishing sample: {} {'short_uuid': 'ab24d4b', 'quality_value': '70', 'quality_max': 70, 'signal_level': -39.0}
-sensor  publishing sample: {} {'short_uuid': 'ab24d4b', 'quality_value': '70', 'quality_max': 70, 'signal_level': -39.0}
+Published msg: {'short_uuid': 04166f8, "currentLoad":0.8995528642244212,"cpuTemperature":32.9,"mem":4762161152}
+Published msg: {'short_uuid': 04166f8, "currentLoad":0.5756115873115185,"cpuTemperature":32.9,"mem":4762664960}
 ```
 
 **ClearBlade/GCP Note** Cloud Relay publishes only to the telemetry (events) topic. It does not publish to the state topic or subscribe to the configuration or commands topics.

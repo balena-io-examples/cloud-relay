@@ -1,4 +1,28 @@
 - commits:
+    - subject: Workaround build error with base image arch
+      hash: 999515a33171aa42879a1cb8752f11dc3fcf12ce
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Ken Bannister <kb2ma@runbox.com>
+        signed-off-by: Ken Bannister <kb2ma@runbox.com>
+      author: Ken Bannister
+      nested: []
+    - subject: Use balena-io-examples org for cloud relay block
+      hash: 9010388ed07cbf4cf4acf7c50c23f14cc00fb577
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Ken Bannister <kb2ma@runbox.com>
+        signed-off-by: Ken Bannister <kb2ma@runbox.com>
+      author: Ken Bannister
+      nested: []
+  version: 0.3.2
+  title: ""
+  date: 2023-02-26T18:11:32.279Z
+- commits:
     - subject: Simplify README Getting Started
       hash: b1c630f6c72c6ad64bc7ba703a3045260781e774
       body: |

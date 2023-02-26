@@ -1,1 +1,1 @@
-FROM bh.cr/balena-io-examples/cloud-relay-%%BALENA_ARCH%%
+FROM bh.cr/balena_io_examples/cloud-relay-%%BALENA_ARCH%%

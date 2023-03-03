@@ -1,4 +1,18 @@
 - commits:
+    - subject: Publish to npmjs
+      hash: 943d3cf31daaa6524a5141aee677749c2e47245b
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Ken Bannister <kb2ma@runbox.com>
+        signed-off-by: Ken Bannister <kb2ma@runbox.com>
+      author: Ken Bannister
+      nested: []
+  version: 0.3.4
+  title: ""
+  date: 2023-03-03T15:32:01.270Z
+- commits:
     - subject: Fix typo in org name
       hash: 3f3a0b1383c7300b40d0b3008b3dc35491bb3f1e
       body: ""

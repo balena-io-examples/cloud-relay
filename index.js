@@ -169,6 +169,8 @@ async function start() {
         }
     } catch(e) {
         console.error(e)
+        // Keep it simple; force exit to restart.
+        process.exit(1)
     }
 }
 

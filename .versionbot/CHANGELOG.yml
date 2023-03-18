@@ -1,4 +1,18 @@
 - commits:
+    - subject: Timeout if MQTT connect to GCP does not respond
+      hash: 09dfd1206a33a67058e728b3afe71ee92a4b96c8
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Ken Bannister <kb2ma@runbox.com>
+        signed-off-by: Ken Bannister <kb2ma@runbox.com>
+      author: Ken Bannister
+      nested: []
+  version: 0.3.5
+  title: ""
+  date: 2023-03-18T00:46:40.068Z
+- commits:
     - subject: Publish to npmjs
       hash: 943d3cf31daaa6524a5141aee677749c2e47245b
       body: ""

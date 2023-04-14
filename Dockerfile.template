@@ -1,11 +1,11 @@
-FROM balenalib/%%BALENA_ARCH%%-alpine-node:14-latest-build as build
+FROM balenalib/%%BALENA_ARCH%%-alpine-node:18-latest-build as build
 
 # Install node dependencies
 COPY package*.json ./
 RUN npm install --production && npm cache clean --force && rm -rf /tmp/*
 
 
-FROM balenalib/%%BALENA_ARCH%%-alpine-node:14-latest-run as run
+FROM balenalib/%%BALENA_ARCH%%-alpine-node:18-latest-run as run
 # pathname specific to distro
 ENV AWS_ROOT_CA_PATH="/etc/ssl/certs/ca-cert-Amazon_Root_CA_1.pem"
 

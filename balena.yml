@@ -1,8 +1,8 @@
 name: cloud-relay
-type: sw.application
+type: sw.block
 description: >-
   Push data to a cloud provider's IoT facility via MQTT messages.
-  Works with AWS, Azure, and Google Cloud.
+  Works with AWS, Azure, and Google Cloud including ClearBlade.
 assets:
   repository:
     type: blob.asset
@@ -14,9 +14,6 @@ assets:
       url: >-
         https://raw.githubusercontent.com/balena-io-examples/cloud-relay/master/logo.png
 data:
-  applicationEnvironmentVariables:
-    - SOUND_VOLUME: 75
-    - AUDIO_OUTPUT: AUTO
   defaultDeviceType: raspberrypi4-64
   supportedDeviceTypes:
     - raspberrypi4-64

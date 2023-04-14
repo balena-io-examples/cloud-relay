@@ -1,4 +1,18 @@
 - commits:
+    - subject: Auto-publish to hub blocks
+      hash: 7b991d53e46dcbabd0b02cdb37a2cce2b3eb6871
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Ken Bannister <kb2ma@runbox.com>
+        signed-off-by: Ken Bannister <kb2ma@runbox.com>
+      author: Ken Bannister
+      nested: []
+  version: 0.3.7
+  title: ""
+  date: 2023-04-14T15:42:37.400Z
+- commits:
     - subject: Ancillary fixups
       hash: a495ed2bdb1d9a62f9cf457358b2de5e3ed4fd60
       body: ""

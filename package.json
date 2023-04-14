@@ -1,6 +1,6 @@
 {
   "name": "cloud-relay",
-  "version": "0.3.8",
+  "version": "0.3.9",
   "description": "balenaBlock to push data from IoT device to cloud provider",
   "main": "index.js",
   "type": "module",
@@ -29,6 +29,6 @@
   },
   "homepage": "https://github.com/balena-io-examples/cloud-relay",
   "versionist": {
-    "publishedAt": "2023-04-14T15:51:03.668Z"
+    "publishedAt": "2023-04-14T19:00:51.914Z"
   }
 }

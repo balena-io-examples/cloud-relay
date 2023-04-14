@@ -1,4 +1,18 @@
 - commits:
+    - subject: Update build to use node v18
+      hash: 7cd32321304cb08ec5af4ac36385e0faad90adcb
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Ken Bannister <kb2ma@runbox.com>
+        signed-off-by: Ken Bannister <kb2ma@runbox.com>
+      author: Ken Bannister
+      nested: []
+  version: 0.3.9
+  title: ""
+  date: 2023-04-14T19:00:51.765Z
+- commits:
     - subject: Minor update for ClearBlade
       hash: 261abfe2dc5befdc0df5ed6b33e604087fa553be
       body: ""

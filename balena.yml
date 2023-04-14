@@ -1,5 +1,5 @@
 name: cloud-relay
-type: sw.application
+type: sw.block
 description: >-
   Push data to a cloud provider's IoT facility via MQTT messages.
   Works with AWS, Azure, and Google Cloud.

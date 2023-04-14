@@ -1,4 +1,18 @@
 - commits:
+    - subject: Minor update for ClearBlade
+      hash: 261abfe2dc5befdc0df5ed6b33e604087fa553be
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Ken Bannister <kb2ma@runbox.com>
+        signed-off-by: Ken Bannister <kb2ma@runbox.com>
+      author: Ken Bannister
+      nested: []
+  version: 0.3.8
+  title: ""
+  date: 2023-04-14T15:51:03.503Z
+- commits:
     - subject: Auto-publish to hub blocks
       hash: 7b991d53e46dcbabd0b02cdb37a2cce2b3eb6871
       body: ""

@@ -1,4 +1,28 @@
 - commits:
+    - subject: Ancillary fixups
+      hash: a495ed2bdb1d9a62f9cf457358b2de5e3ed4fd60
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Ken Bannister <kb2ma@runbox.com>
+        signed-off-by: Ken Bannister <kb2ma@runbox.com>
+      author: Ken Bannister
+      nested: []
+    - subject: Designate project as a block type
+      hash: 8e49eef05469aefa91af052620840f4140f46abc
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Ken Bannister <kb2ma@runbox.com>
+        signed-off-by: Ken Bannister <kb2ma@runbox.com>
+      author: Ken Bannister
+      nested: []
+  version: 0.3.6
+  title: ""
+  date: 2023-04-14T14:05:20.113Z
+- commits:
     - subject: Timeout if MQTT connect to GCP does not respond
       hash: 09dfd1206a33a67058e728b3afe71ee92a4b96c8
       body: ""

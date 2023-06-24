@@ -10,7 +10,7 @@
     "async-mqtt": "^2.6.1",
     "azure-iot-device": "^1.17.8",
     "azure-iot-device-mqtt": "^1.15.8",
-    "jsonwebtoken": "^8.5.1",
+    "jsonwebtoken": "^9.0.0",
     "node-fetch": "^3.1.0"
   },
   "devDependencies": {},

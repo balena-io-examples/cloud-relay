@@ -1,4 +1,18 @@
 - commits:
+    - subject: Disable publishing to NPM
+      hash: b876570abe3e9acf4eda5161290790f907bdca28
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Ken Bannister <kb2ma@runbox.com>
+        signed-off-by: Ken Bannister <kb2ma@runbox.com>
+      author: Ken Bannister
+      nested: []
+  version: 0.3.10
+  title: ""
+  date: 2026-02-20T15:07:11.537Z
+- commits:
     - subject: Update build to use node v18
       hash: 7cd32321304cb08ec5af4ac36385e0faad90adcb
       body: ""
@@ -336,28 +350,17 @@
 - commits:
     - subject: "patch: bump aws-iot-device-sdk from 2.2.11 to 2.2.12"
 - commits:
-    - body: >-
-        Bumps [aws-iot-device-sdk](https://github.com/aws/aws-iot-device-sdk-js)
-        from 2.2.11 to 2.2.12.
-
+    - body: |-
+        Bumps [aws-iot-device-sdk](https://github.com/aws/aws-iot-device-sdk-js) from 2.2.11 to 2.2.12.
         - [Release notes](https://github.com/aws/aws-iot-device-sdk-js/releases)
-
         - [Changelog](https://github.com/aws/aws-iot-device-sdk-js/blob/master/CHANGELOG.md)
-
         - [Commits](https://github.com/aws/aws-iot-device-sdk-js/compare/v2.2.11...v2.2.12)
-
         ---
-
         updated-dependencies:
-
         - dependency-name: aws-iot-device-sdk
-
         dependency-type: direct:production
-
         update-type: version-update:semver-patch
-
         ...
-
         Signed-off-by: dependabot[bot] <support@github.com>
 - version: 0.2.0
 - date: 2022-05-22T13:56:16Z
